@@ -1,0 +1,20 @@
+Package: placeholder
+Type: Book
+Title: rInSpace
+Version: 0.0.1
+Imports:
+  bookdown,
+  raster,
+  rgdal,
+  rgeos,
+  rosm,
+  sf,
+  spacetime,
+  spdep,
+  stars,
+  svglite,
+  tmap,
+  webshot
+Remotes:
+  crsh/citr,
+  r-spatial/leafsync
