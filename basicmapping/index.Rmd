@@ -1,37 +1,22 @@
 ---
 title: R in Space - Basic mapping
-author: [david, marieh, nicolas, kevin, elliot, steve]
-tags: [R in Space, R, Spatial]
-draft: false
-tweet: "R in Space - Basic mapping"
-date: 2018-04-10
-navposts:
-  prev: rinspace_import
-  home: rinspace_homepage
-  next: rinspace_attrmanip
-output:
-  rmarkdown::html_page:
-    fig_width: 3
-    dev: svg
 ---
 
 
-```{r codeChunkSetUp, include = FALSE}
-source('../codeChunkSetUp.R')
-```
+# Basic mapping
 
 
 ## Plot methods for `sp` objects
 
 Let's first get some data:
 
-```{r getdata, message = FALSE}
+```{r getdatabel, message = FALSE}
 library(sp)
 library(sf)
 library(raster)
 dir.create("data")
-bel1 <- getData("GADM", country = "BEL", level = 1, path = "data/")
-bel2 <- getData("GADM", country = "BEL", level = 2, path = "data/")
+bel1 <- getData("GADM", country = "BEL", level = 1, path = "basicmapping/data")
+bel2 <- getData("GADM", country = "BEL", level = 2, path = "basicmapping/data")
 ```
 
 Quick plot:
@@ -43,7 +28,7 @@ plot(bel1)
 Two quick plots:
 
 ```{r plotsp2}
-par(mfrow = c(1,2), mar = c(0,0,0,0))
+par(mfrow = c(1, 2), mar = c(0, 0, 0, 0))
 plot(bel1, col = 1:3)
 plot(bel2, lty = 2)
 ```
@@ -54,7 +39,7 @@ Slightly customized plots:
 plot(bel1, col = "grey85", main = "Belgium")
 plot(bel2, lwd = .5, add = TRUE)
 points(coordinates(bel2), pch = 19, cex = .4)
-city = coordinates(bel2)[1,]
+city <- coordinates(bel2)[1, ]
 text(city[1], city[2], labels = "Bruxelles", pos = 3, col = "#9728eb")
 ```
 
@@ -65,14 +50,14 @@ text(city[1], city[2], labels = "Bruxelles", pos = 3, col = "#9728eb")
 
 Let's first get two `sf` object:
 
-```{r map_sf0, message = F}
+```{r map_sf0, message = FALSE}
 bel1_sf <- st_as_sf(bel1)
 bel2_sf <- st_as_sf(bel2)
 ```
 
 Let's try a simple plot.
 
-```{r map_sf1, message = F}
+```{r map_sf1, message = FALSE}
 plot(bel1_sf)
 ```
 
@@ -81,7 +66,7 @@ to the values. To obtain something similar to what is found in `sp`,
 an `sfc` object must be used:
 
 
-```{r map_sf2, message = F}
+```{r map_sf2, message = FALSE}
 plot(st_geometry(bel1_sf), lwd = 1.5, col = "grey85")
 # same as :
 # plot(bel1_sf$geometry, lwd = 1.5, col = "grey85")
@@ -93,11 +78,11 @@ plot(st_geometry(bel2_sf), lwd = .5, add = TRUE)
 
 Let's get a raster layer of altitude in Belgium using again `getData()`.
 
-```{r getdata_alt, message = F}
-alt <- getData("alt", country = "Belgium", path = "data/")
+```{r getdata_alt, message = FALSE}
+alt <- getData("alt", country = "Belgium", path = "basicmapping/data")
 ```
 
-```{r plot_alt, message = F}
+```{r plot_alt, message = FALSE}
 plot(alt)
 ```
 
@@ -106,7 +91,7 @@ We can also add different layers of information on this maps:
 
 
 
-```{r plot_alt2, message = F}
+```{r plot_alt2, message = FALSE}
 plot(alt)
 contour(alt, add = TRUE)
 ```
@@ -114,7 +99,7 @@ contour(alt, add = TRUE)
 Or reclassify and change the color palette:
 
 
-```{r plot_alt3, message = F}
+```{r plot_alt3, message = FALSE}
 # Assign color to a object
 myCol <- terrain.colors(3)
 plot(alt,
@@ -125,7 +110,7 @@ plot(alt,
 
 ## plotting together `sf` and `raster` objects
 
-```{r plot_alt_sf, message = F}
+```{r plot_alt_sf, message = FALSE}
 # Create a new color palette
 library(RColorBrewer)
 myPal <- brewer.pal(n = 9, name = "Greens")
@@ -151,18 +136,8 @@ text(st_coordinates(st_centroid(brux)), labels = "Bruxelles", pos = 3, col = "#9
 
 ## Package `mapview`
 
-```{r mapview, message = F, fig.width = 9.5}
+```{r mapview, message = FALSE, fig.width = 9.5}
 library(mapview)
 mapview(bel1)@map
 ```
 
-
-### Neat!
-
-
-<details>
-<summary> Session info <i class="fa fa-cogs" aria-hidden="true"></i> </summary>
-```{r sessionInfo}
-sessionInfo()
-```
-</details>

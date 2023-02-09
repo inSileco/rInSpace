@@ -1,20 +1,8 @@
 ---
 title: R in Space - Attribute manipulations
-author: [david, marieh, nicolas, kevin, elliot, steve]
-tags: [R in Space, R, Spatial]
-date: 2018-04-09
-draft: false
-tweet: "R in Space - Attribute manipulations"
-navposts:
-  prev: rinspace_basicmapping
-  home: rinspace_homepage
-  next: rinspace_geomanip
-output:
-  rmarkdown::html_page:
-    fig_width: 3
-    dev: svg
 ---
 
+# Attribute manipulations
 
 ## Spatial objects attributes manipulations
 
@@ -37,19 +25,20 @@ will mostly apply.
 Let's begin by creating an `sf` points object as seen in the post on
 [Spatial objects in R]() <!-- to add -->
 
-```{r sim_points, results='asis'}
+```{r sim_points2, results='asis'}
 mydata <- data.frame(
   id = 1:20,
-  long = -82+2*runif(20),
-  lat = 42+2*runif(20),
+  long = -82 + 2 * runif(20),
+  lat = 42 + 2 * runif(20),
   var1 = rnorm(20),
-  var2 = 10*runif(20)
+  var2 = 10 * runif(20)
 )
 
 library(sf)
 spatData <- st_as_sf(mydata,
-                     coords = c("long", "lat"),
-                     crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0")
+  coords = c("long", "lat"),
+  crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"
+)
 
 knitr::kable(head(spatData))
 plot(spatData)
@@ -84,16 +73,16 @@ attributes you wish to keep.
 
 ```{r remAttr2, results='asis'}
 # Remove last 20 attributes
-for(i in 1:5) spatData <- cbind(spatData, varSup = runif(20))
+for (i in 1:5) spatData <- cbind(spatData, varSup = runif(20))
 knitr::kable(head(spatData))
 rem <- colnames(spatData)[4:8]
 spatData <- spatData[, !colnames(spatData) %in% rem]
 knitr::kable(head(spatData))
 
 # Keep id, var1 and var2
-for(i in 1:5) spatData <- cbind(spatData, varSup = runif(20))
+for (i in 1:5) spatData <- cbind(spatData, varSup = runif(20))
 knitr::kable(head(spatData))
-keep <- c('id','var1','var2')
+keep <- c("id", "var1", "var2")
 spatData <- spatData[, keep]
 knitr::kable(head(spatData))
 ```
@@ -107,8 +96,8 @@ will begin by adding some factorial attributes to our spatial object to discuss
 this in more detail.
 
 ```{r factAttr}
-spatData$fact1 <- paste0('a', 1:2) # Create factor with 2 levels
-spatData$fact2 <- paste0('b', 1:5) # Create factor with 5 levels
+spatData$fact1 <- paste0("a", 1:2) # Create factor with 2 levels
+spatData$fact2 <- paste0("b", 1:5) # Create factor with 5 levels
 knitr::kable(head(spatData))
 ```
 
@@ -120,8 +109,8 @@ use the first 10 rows of our data.
 
 ```{r manualSub}
 selectID <- 1:10
-plot(spatData$geometry, col = '#00000055', pch = 20, cex = 1.25, main = '')
-plot(spatData$geometry[selectID], col = '#000000', add = T, pch = 1, cex = 2, lwd = 2)
+plot(spatData$geometry, col = "#00000055", pch = 20, cex = 1.25, main = "")
+plot(spatData$geometry[selectID], col = "#000000", add = T, pch = 1, cex = 2, lwd = 2)
 ```
 
 <br/>
@@ -135,28 +124,28 @@ like [StackOverflow](https://stackoverflow.com/) for more specific questions.
 ```{r autoSub, result = 'asis'}
 # Select all values for var1 greater to or equal to 0
 selectID <- spatData$var1 >= 0
-plot(spatData$geometry, col = '#00000055', pch = 20, cex = 1.25, main = '')
-plot(spatData$geometry[selectID], col = '#000000', add = T, pch = 1, cex = 2, lwd = 2)
+plot(spatData$geometry, col = "#00000055", pch = 20, cex = 1.25, main = "")
+plot(spatData$geometry[selectID], col = "#000000", add = T, pch = 1, cex = 2, lwd = 2)
 
 # var1 smaller than 0 and var2 higher than 5
 selectID <- spatData$var1 < 0 & spatData$var2 < 5
-plot(spatData$geometry, col = '#00000055', pch = 20, cex = 1.25, main = '')
-plot(spatData$geometry[selectID], col = '#000000', add = T, pch = 1, cex = 2, lwd = 2)
+plot(spatData$geometry, col = "#00000055", pch = 20, cex = 1.25, main = "")
+plot(spatData$geometry[selectID], col = "#000000", add = T, pch = 1, cex = 2, lwd = 2)
 
 # fact1 equal to a1
-selectID <- spatData$fact1 == 'a1'
-plot(spatData$geometry, col = '#00000055', pch = 20, cex = 1.25, main = '')
-plot(spatData$geometry[selectID], col = '#000000', add = T, pch = 1, cex = 2, lwd = 2)
+selectID <- spatData$fact1 == "a1"
+plot(spatData$geometry, col = "#00000055", pch = 20, cex = 1.25, main = "")
+plot(spatData$geometry[selectID], col = "#000000", add = T, pch = 1, cex = 2, lwd = 2)
 
 # fact1 equal to a1 or var1 greater than 0
-selectID <- spatData$fact1 == 'a1' | spatData$var1 > 0
-plot(spatData$geometry, col = '#00000055', pch = 20, cex = 1.25, main = '')
-plot(spatData$geometry[selectID], col = '#000000', add = T, pch = 1, cex = 2, lwd = 2)
+selectID <- spatData$fact1 == "a1" | spatData$var1 > 0
+plot(spatData$geometry, col = "#00000055", pch = 20, cex = 1.25, main = "")
+plot(spatData$geometry[selectID], col = "#000000", add = T, pch = 1, cex = 2, lwd = 2)
 
 # fact2 equal to b3 or b4
-selectID <- spatData$fact2 %in% c('b3','b4')
-plot(spatData$geometry, col = '#00000055', pch = 20, cex = 1.25, main = '')
-plot(spatData$geometry[selectID], col = '#000000', add = T, pch = 1, cex = 2, lwd = 2)
+selectID <- spatData$fact2 %in% c("b3", "b4")
+plot(spatData$geometry, col = "#00000055", pch = 20, cex = 1.25, main = "")
+plot(spatData$geometry[selectID], col = "#000000", add = T, pch = 1, cex = 2, lwd = 2)
 ```
 
 <br/>
@@ -190,18 +179,8 @@ plot(aggData, cex = abs(aggData$var1))
 
 ```
 
-## Raster objects
+<!-- ## Raster objects
 
 Attributes tables associated with raster objects can also be manipulated, although
 the data attached to a raster will typically be less amenable to changes and
-multiple parameters.
-
-```{r rasterObject}
-
-```
-
-### Setting values
-
-### Subsets
-
-###
+multiple parameters. -->

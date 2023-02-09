@@ -1,15 +1,8 @@
 ---
 title: R in Space - Useful resources
-author: [marieh, nicolas, kevin, david, elliot, steve]
-date: 2018-04-13
-tags: [R in Space, R, Spatial, wiki]
-draft: false
-tweet: "R in Space - Useful resources"
-navposts:
-  prev: rinspace_homepage
-  home: rinspace_homepage
-  next: rinspace_spobjects
 ---
+
+# Useful resources
 
 
 ## The mapping landscape has changed!
@@ -110,12 +103,12 @@ community, which explains the incredible richness of packages, the abundance
 of documentation and tutorials available on line as well as the massive stack
 of answered questions on question and answer sites such as
 [StackOverflow](https://stackoverflow.com/questions/tagged/r).
-To give you something more tangible regarding the abundance of R packages,
+<!-- To give you something more tangible regarding the abundance of R packages,
 we propose below a curated list of R packages you will doubtlessly find very helpful:
 
-{{< rsppkgs >}}
+{{< rsppkgs >}} -->
 
-For a more detailed list of packages, have a look at the
+For a detailed list of packages, have a look at the
 [CRAN task view "Spatial"](https://cran.r-project.org/web/views/Spatial.html).
 Note that there is a quick way to install all packages listed in the task view
 through the [package](https://cran.r-project.org/web/packages/ctv):

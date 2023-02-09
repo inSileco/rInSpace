@@ -1,27 +1,9 @@
 ---
 title: "R in Space - About spatial data"
-author: [david, marieh, nicolas, kevin, elliot, steve]
-date: 2018-04-12
-tags: [R in Space, R, Spatial]
-rpkgs: [raster, sf, sp]
-tweet: "R in Space - About spatial data"
-draft: false
-navposts:
-  prev: rinspace_refs
-  home: rinspace_homepage
-  next: rinspace_import
-output:
-  rmarkdown::html_page:
-    toc: true
-    fig_width: 3
-    dev: svg
 ---
 
 
-```{r codeChunkSetUp, include = FALSE}
-source('../codeChunkSetUp.R')
-```
-
+# About spatial data
 
 <br><br>
 
@@ -62,12 +44,12 @@ environment.
 
 <br />
 
-```{r vector-data, echo=FALSE, eval=TRUE, fig.width=8.6, fig.height=2.86, dpi=300, out.width=810, out.height=270, fig.align='center'}
+```{r vector-data, echo=FALSE, eval= TRUE, fig.width=8.6, fig.height=2.86, dpi=300, out.width=810, out.height=270, fig.align='center'}
 library(raster)
 
-corse  <- readRDS("data/corse-admin.rds")
-rivers <- readRDS("data/corse-rivers.rds")
-cities <- readRDS("data/corse-cities.rds")
+corse <- readRDS("spobjects/data/corse-admin.rds")
+rivers <- readRDS("spobjects/data/corse-rivers.rds")
+cities <- readRDS("spobjects/data/corse-cities.rds")
 
 par(
   mar      = rep(1.5, 4),
@@ -80,7 +62,7 @@ par(
 
 # Vector - POINTS
 plot(corse, col = NA, border = NA)
-points(cities[ , c("lon", "lat")], pch = 21, bg = par()$col.axis, col = "white", cex = 2)
+points(cities[, c("lon", "lat")], pch = 21, bg = par()$col.axis, col = "white", cex = 2)
 text(8, 42.8, "Vector data\n(POINTS)", font = 2, col = par()$col.axis, pos = 4, cex = 1.25)
 
 par(mgp = c(3, .5, 0))
@@ -95,7 +77,7 @@ box(col = par()$col.axis)
 plot(corse, col = NA, border = NA)
 plot(rivers, add = TRUE, col = "#96DAE8", lwd = 3)
 plot(rivers, add = TRUE, col = "#009BC9", lwd = 1)
-plot(corse, col = NA, border = "white", add=T, lwd = 3)
+plot(corse, col = NA, border = "white", add = T, lwd = 3)
 text(8, 42.8, "Vector data\n(LINES)", font = 2, col = par()$col.axis, pos = 4, cex = 1.25)
 
 par(mgp = c(3, .5, 0))
@@ -179,13 +161,13 @@ Raster can be used to represent a very broad range of data: continuous
 variables.
 
 
-```{r raster-data, echo=FALSE, eval=TRUE, fig.width=8.6, fig.height=2.86, dpi=300, out.width=810, out.height=270, fig.align='center'}
+```{r raster-data, echo=FALSE, eval= TRUE, fig.width=8.6, fig.height=2.86, dpi=300, out.width=810, out.height=270, fig.align='center'}
 library(rgdal)
 
-corse      <- readRDS("data/corse-admin.rds")
-elevation  <- readRDS("data/corse-elevation.rds")
-landcover  <- readRDS("data/corse-landcover.rds")
-occurrence <- readRDS("data/corse-occurrence.rds")
+corse      <- readRDS("spobjects/data/corse-admin.rds")
+elevation  <- readRDS("spobjects/data/corse-elevation.rds")
+landcover  <- readRDS("spobjects/data/corse-landcover.rds")
+occurrence <- readRDS("spobjects/data/corse-occurrence.rds")
 
 par(
   mar      = rep(1.5, 4),
@@ -259,13 +241,13 @@ the long term" ([Simple Features for R](https://cran.r-project.org/web/packages/
 Let first create a data frame `mydata`:
 
 ```{r sim_points, results='asis'}
-mylon <- -82+2*runif(20)
-mylat <- 42+2*runif(20)
+mylon <- -82 + 2 * runif(20)
+mylat <- 42 + 2 * runif(20)
 mydata <- data.frame(
   lon = mylon,
   lat = mylat,
   var1 = rnorm(20),
-  var2 = 10*runif(20)
+  var2 = 10 * runif(20)
 )
 ```
 
@@ -368,7 +350,8 @@ library(sf)
 pts_sf <- st_as_sf(
   x = mydata,
   coords = c("lon", "lat"),
-  crs = 4326)
+  crs = 4326
+)
 ```
 
 Let's examine its class
@@ -388,7 +371,7 @@ class(pts_sfc)
 #### Class `sfg`
 
 ```{r sf3}
-(x <- st_point(c(1,2)))
+(x <- st_point(c(1, 2)))
 class(x)
 ```
 
@@ -424,12 +407,12 @@ Package `raster` define three classes of rater object we detail below.
 
 ```{r raster, message = F}
 library(raster)
-val1 <- matrix(runif(100*100,0,10), ncol = 100, nrow = 100)
+val1 <- matrix(runif(100 * 100, 0, 10), ncol = 100, nrow = 100)
 ras1 <- raster(
-    val1,
-    crs = CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"),
-    xmn = -82, xmx = +80, ymn = +42, ymx = +44
-  )
+  val1,
+  crs = CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"),
+  xmn = -82, xmx = +80, ymn = +42, ymx = +44
+)
 class(ras1)
 dim(ras1)
 head(values(ras1))
@@ -445,12 +428,12 @@ http://www.rspatial.org/spatial/rst/4-rasterdata.html#rasterstack-and-rasterbric
 Let's first create another raster (with the same CRS)
 
 ```{r raster3}
-val2 <- matrix(rnorm(100*100), ncol = 100, nrow = 100)
+val2 <- matrix(rnorm(100 * 100), ncol = 100, nrow = 100)
 ras2 <- raster(
-    val2,
-    crs = CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"),
-    xmn = -82, xmx = +80, ymn = +42, ymx = +44
-  )
+  val2,
+  crs = CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"),
+  xmn = -82, xmx = +80, ymn = +42, ymx = +44
+)
 class(ras2)
 ```
 
@@ -467,11 +450,3 @@ Let's `brick()` them:
 bri1 <- brick(ras1, ras2)
 class(bri1)
 ```
-
-
-<details>
-<summary> Session info <i class="fa fa-cogs" aria-hidden="true"></i> </summary>
-```{r sessionInfo}
-sessionInfo()
-```
-</details>

@@ -1,7 +1,12 @@
+.vscode
+_book
+_bookdown_files
+*.zip
 # large files
-rinspace_import/data/
-rinspace_basicmapping/data/
-rinspace_geomanip/data/
-rinspace_custommaps/data/
-rinspace_custommaps/wc10/
+import/data/
+basicmapping/data/
+geomanip/data/
+custommaps/data/
+custommaps/wc10/
 index.html
+wc10

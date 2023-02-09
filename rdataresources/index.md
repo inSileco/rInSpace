@@ -1,22 +1,9 @@
 ---
 title: R in Space - R spatial data resources
-author: [david, marieh, nicolas, kevin, elliot, steve]
-tags: [R in Space, R, Spatial]
-date: 2018-04-07
-draft: false
-tweet: "R in Space - R spatial data resources"
-navposts:
-  prev: rinspace_geomanip
-  home: rinspace_homepage
-  next: rinspace_custommaps
-output:
-  rmarkdown::html_page:
-    fig_width: 3
-    dev: svg
 ---
 
 
-## R data resources
+# R data resources
 
 With the R community as vibrant and dynamic as it is, there are an increasingly
 high number of online data resources readily available to users through simple
@@ -36,9 +23,9 @@ for further detail.
 <br/>
 
 
-### Environmental data
+## Environmental data
 
-#### Abiotic data
+### Abiotic data
 
 - [`marmap`](https://github.com/ericpante/marmap)
 - [`raster`](https://cran.r-project.org/web/packages/raster/index.html)
@@ -46,13 +33,13 @@ for further detail.
 - [`rWBclimate`](https://github.com/ropensci/rWBclimate)
 - [`sdmpredictors`](https://cran.r-project.org/web/packages/sdmpredictors/index.html)
 
-#### Biotic data
+### Biotic data
 
 - [`rgbif`](https://github.com/ropensci/rgbif)
 - [`robis`](https://github.com/iobis/robis)
 - [`spocc`](https://github.com/ropensci/spocc)
 
-#### Base maps
+### Base maps
 
 - [`ggmap`](https://github.com/dkahle/ggmap)
 - [`mregions`](https://github.com/ropenscilabs/mregions)

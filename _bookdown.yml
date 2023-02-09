@@ -1,0 +1,13 @@
+book_filename: rInSpace
+output_dir: _book
+delete_merged_file: true
+language:
+  label:
+  fig: "Fig. "
+  tab: "Tab. "
+  eq: "Eq. "
+  ui:
+    chapter_name: "Chapter "
+rmd_files: ["index.Rmd", "refs/index.md", "spobjects/index.Rmd",
+"import/index.Rmd", "basicmapping/index.Rmd", "attrmanip/index.Rmd", 
+"geomanip/index.Rmd", "rdataresources/index.md", "custommaps/index.Rmd"]
