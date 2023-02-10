@@ -29,4 +29,4 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
       - name: Build GitBook
         run: |-
-          Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
+          Rscript -e "options(bookdown.render.file_scope = FALSE, pandoc.stack.size = '2048m'); bookdown::render_book('index.Rmd', 'bookdown::gitbook')"
