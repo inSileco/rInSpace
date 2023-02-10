@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6.1 Spatial objects attributes manipulations | R in Space - Custom mapping</title>
+  <meta name="description" content="6.1 Spatial objects attributes manipulations | R in Space - Custom mapping" />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6.1 Spatial objects attributes manipulations | R in Space - Custom mapping" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6.1 Spatial objects attributes manipulations | R in Space - Custom mapping" />
+  
+  
+  
+
+<meta name="author" content="David Beauchesne, Mari-Hélène, Nicolas Casajus, Kevin Caelles, Elliot Dreujou, Steve Vissault" />
+
+
+<meta name="date" content="2023-02-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="attribute-manipulations.html"/>
+<link rel="next" href="geometry-manipulation.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="css/extra.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="#">R in Space</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="so-it-begins.html"><a href="so-it-begins.html"><i class="fa fa-check"></i><b>1.1</b> So it begins</a></li>
+<li class="chapter" data-level="1.2" data-path="beginner-course.html"><a href="beginner-course.html"><i class="fa fa-check"></i><b>1.2</b> Beginner course</a></li>
+<li class="chapter" data-level="1.3" data-path="advanced-course.html"><a href="advanced-course.html"><i class="fa fa-check"></i><b>1.3</b> Advanced course</a></li>
+<li class="chapter" data-level="1.4" data-path="sessioninfo.html"><a href="sessioninfo.html"><i class="fa fa-check"></i><b>1.4</b> SessionInfo</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="useful-resources.html"><a href="useful-resources.html"><i class="fa fa-check"></i><b>2</b> Useful resources</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html"><i class="fa fa-check"></i><b>2.1</b> The mapping landscape has changed!</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#geographic-information-system-gis"><i class="fa fa-check"></i><b>2.1.1</b> Geographic Information System (GIS)</a></li>
+<li class="chapter" data-level="2.1.2" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#web-mapping-tools"><i class="fa fa-check"></i><b>2.1.2</b> Web mapping tools</a></li>
+<li class="chapter" data-level="2.1.3" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#specific-packages-of-various-programming-languages"><i class="fa fa-check"></i><b>2.1.3</b> Specific packages of various programming languages</a>
+<ul>
+<li class="chapter" data-level="2.1.3.1" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#cc-libraries"><i class="fa fa-check"></i><b>2.1.3.1</b> C/C++ libraries:</a></li>
+<li class="chapter" data-level="2.1.3.2" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#javascript"><i class="fa fa-check"></i><b>2.1.3.2</b> JavaScript:</a></li>
+<li class="chapter" data-level="2.1.3.3" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#julia-packages"><i class="fa fa-check"></i><b>2.1.3.3</b> Julia packages</a></li>
+<li class="chapter" data-level="2.1.3.4" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#python-packages"><i class="fa fa-check"></i><b>2.1.3.4</b> Python packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.1.4" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#free-gis-data"><i class="fa fa-check"></i><b>2.1.4</b> Free GIS data</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="so-why-use-r-for-mapping.html"><a href="so-why-use-r-for-mapping.html"><i class="fa fa-check"></i><b>2.2</b> So… why use R for mapping?</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="about-spatial-data.html"><a href="about-spatial-data.html"><i class="fa fa-check"></i><b>3</b> About spatial data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="vector-data.html"><a href="vector-data.html"><i class="fa fa-check"></i><b>3.1</b> Vector data</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="vector-data.html"><a href="vector-data.html#points-data"><i class="fa fa-check"></i><b>3.1.1</b> Points data</a></li>
+<li class="chapter" data-level="3.1.2" data-path="vector-data.html"><a href="vector-data.html#lines-data"><i class="fa fa-check"></i><b>3.1.2</b> Lines data</a></li>
+<li class="chapter" data-level="3.1.3" data-path="vector-data.html"><a href="vector-data.html#polygons-data"><i class="fa fa-check"></i><b>3.1.3</b> Polygons data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="raster-data.html"><a href="raster-data.html"><i class="fa fa-check"></i><b>3.2</b> Raster data</a></li>
+<li class="chapter" data-level="3.3" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html"><i class="fa fa-check"></i><b>3.3</b> Vector objects in R</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#package-sp"><i class="fa fa-check"></i><b>3.3.1</b> Package <code>sp</code></a>
+<ul>
+<li class="chapter" data-level="3.3.1.1" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#classes"><i class="fa fa-check"></i><b>3.3.1.1</b> Classes</a></li>
+<li class="chapter" data-level="3.3.1.2" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#spatialpointsdataframe"><i class="fa fa-check"></i><b>3.3.1.2</b> <code>SpatialPointsDataFrame</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3.2" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#package-sf"><i class="fa fa-check"></i><b>3.3.2</b> Package <code>sf</code></a>
+<ul>
+<li class="chapter" data-level="3.3.2.1" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#class-sf"><i class="fa fa-check"></i><b>3.3.2.1</b> Class <code>sf</code></a></li>
+<li class="chapter" data-level="3.3.2.2" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#class-sfc"><i class="fa fa-check"></i><b>3.3.2.2</b> Class <code>sfc</code></a></li>
+<li class="chapter" data-level="3.3.2.3" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#class-sfg"><i class="fa fa-check"></i><b>3.3.2.3</b> Class <code>sfg</code></a></li>
+<li class="chapter" data-level="3.3.2.4" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#how-to-import-a-sp-object"><i class="fa fa-check"></i><b>3.3.2.4</b> How to import a <code>sp</code> object</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="raster-objects-in-r.html"><a href="raster-objects-in-r.html"><i class="fa fa-check"></i><b>3.4</b> Raster objects in R</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="raster-objects-in-r.html"><a href="raster-objects-in-r.html#rasterlayer"><i class="fa fa-check"></i><b>3.4.1</b> RasterLayer</a></li>
+<li class="chapter" data-level="3.4.2" data-path="raster-objects-in-r.html"><a href="raster-objects-in-r.html#rasterstack-and-rasterbrick"><i class="fa fa-check"></i><b>3.4.2</b> RasterStack and RasterBrick</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="import-spatial-objects.html"><a href="import-spatial-objects.html"><i class="fa fa-check"></i><b>4</b> Import spatial objects</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="reading-and-writing-spatial-objects-with-sf-and-raster.html"><a href="reading-and-writing-spatial-objects-with-sf-and-raster.html"><i class="fa fa-check"></i><b>4.1</b> Reading and writing spatial objects with <code>sf</code> and <code>raster</code></a></li>
+<li class="chapter" data-level="4.2" data-path="import-spatial-data-from-.csv-file.html"><a href="import-spatial-data-from-.csv-file.html"><i class="fa fa-check"></i><b>4.2</b> Import spatial data from .csv file</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="import-spatial-data-from-.csv-file.html"><a href="import-spatial-data-from-.csv-file.html#convert-a-data-frame-to-simple-feature-objects"><i class="fa fa-check"></i><b>4.2.1</b> Convert a data frame to simple feature objects</a></li>
+<li class="chapter" data-level="4.2.2" data-path="import-spatial-data-from-.csv-file.html"><a href="import-spatial-data-from-.csv-file.html#export-your-points-in-a-shapefile"><i class="fa fa-check"></i><b>4.2.2</b> Export your points in a Shapefile</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="import-shapefile-data.html"><a href="import-shapefile-data.html"><i class="fa fa-check"></i><b>4.3</b> Import Shapefile data</a></li>
+<li class="chapter" data-level="4.4" data-path="import-geojson-file.html"><a href="import-geojson-file.html"><i class="fa fa-check"></i><b>4.4</b> Import GeoJSON file</a></li>
+<li class="chapter" data-level="4.5" data-path="import-raster-data.html"><a href="import-raster-data.html"><i class="fa fa-check"></i><b>4.5</b> Import raster data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="basic-mapping.html"><a href="basic-mapping.html"><i class="fa fa-check"></i><b>5</b> Basic mapping</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="plot-methods-for-sp-objects.html"><a href="plot-methods-for-sp-objects.html"><i class="fa fa-check"></i><b>5.1</b> Plot methods for <code>sp</code> objects</a></li>
+<li class="chapter" data-level="5.2" data-path="plot-methods-for-sf-objects.html"><a href="plot-methods-for-sf-objects.html"><i class="fa fa-check"></i><b>5.2</b> plot methods for <code>sf</code> objects</a></li>
+<li class="chapter" data-level="5.3" data-path="plot-methods-for-raster-objects.html"><a href="plot-methods-for-raster-objects.html"><i class="fa fa-check"></i><b>5.3</b> plot methods for <code>raster</code> objects</a></li>
+<li class="chapter" data-level="5.4" data-path="plotting-together-sf-and-raster-objects.html"><a href="plotting-together-sf-and-raster-objects.html"><i class="fa fa-check"></i><b>5.4</b> plotting together <code>sf</code> and <code>raster</code> objects</a></li>
+<li class="chapter" data-level="5.5" data-path="package-mapview.html"><a href="package-mapview.html"><i class="fa fa-check"></i><b>5.5</b> Package <code>mapview</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="attribute-manipulations.html"><a href="attribute-manipulations.html"><i class="fa fa-check"></i><b>6</b> Attribute manipulations</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="spatial-objects-attributes-manipulations.html"><a href="spatial-objects-attributes-manipulations.html"><i class="fa fa-check"></i><b>6.1</b> Spatial objects attributes manipulations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="spatial-objects-attributes-manipulations.html"><a href="spatial-objects-attributes-manipulations.html#vector-objects"><i class="fa fa-check"></i><b>6.1.1</b> Vector objects</a></li>
+<li class="chapter" data-level="6.1.2" data-path="spatial-objects-attributes-manipulations.html"><a href="spatial-objects-attributes-manipulations.html#adding-and-removing-attributes"><i class="fa fa-check"></i><b>6.1.2</b> Adding and removing attributes</a></li>
+<li class="chapter" data-level="6.1.3" data-path="spatial-objects-attributes-manipulations.html"><a href="spatial-objects-attributes-manipulations.html#subsets"><i class="fa fa-check"></i><b>6.1.3</b> Subsets</a></li>
+<li class="chapter" data-level="6.1.4" data-path="spatial-objects-attributes-manipulations.html"><a href="spatial-objects-attributes-manipulations.html#join"><i class="fa fa-check"></i><b>6.1.4</b> Join</a></li>
+<li class="chapter" data-level="6.1.5" data-path="spatial-objects-attributes-manipulations.html"><a href="spatial-objects-attributes-manipulations.html#aggregate"><i class="fa fa-check"></i><b>6.1.5</b> Aggregate</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="geometry-manipulation.html"><a href="geometry-manipulation.html"><i class="fa fa-check"></i><b>7</b> Geometry manipulation</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="sp-objects.html"><a href="sp-objects.html"><i class="fa fa-check"></i><b>7.1</b> <code>sp</code> objects</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="sp-objects.html"><a href="sp-objects.html#subset"><i class="fa fa-check"></i><b>7.1.1</b> Subset</a></li>
+<li class="chapter" data-level="7.1.2" data-path="sp-objects.html"><a href="sp-objects.html#unions"><i class="fa fa-check"></i><b>7.1.2</b> Unions</a></li>
+<li class="chapter" data-level="7.1.3" data-path="sp-objects.html"><a href="sp-objects.html#buffers"><i class="fa fa-check"></i><b>7.1.3</b> Buffers</a></li>
+<li class="chapter" data-level="7.1.4" data-path="sp-objects.html"><a href="sp-objects.html#intersections"><i class="fa fa-check"></i><b>7.1.4</b> Intersections</a></li>
+<li class="chapter" data-level="7.1.5" data-path="sp-objects.html"><a href="sp-objects.html#differences"><i class="fa fa-check"></i><b>7.1.5</b> Differences</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="overlays.html"><a href="overlays.html"><i class="fa fa-check"></i><b>7.2</b> Overlays</a></li>
+<li class="chapter" data-level="7.3" data-path="sf-objects.html"><a href="sf-objects.html"><i class="fa fa-check"></i><b>7.3</b> <code>sf</code> objects</a></li>
+<li class="chapter" data-level="7.4" data-path="raster-objects.html"><a href="raster-objects.html"><i class="fa fa-check"></i><b>7.4</b> <code>raster</code> objects</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="raster-objects.html"><a href="raster-objects.html#extract-values"><i class="fa fa-check"></i><b>7.4.1</b> Extract values</a></li>
+<li class="chapter" data-level="7.4.2" data-path="raster-objects.html"><a href="raster-objects.html#mask"><i class="fa fa-check"></i><b>7.4.2</b> Mask</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="r-data-resources.html"><a href="r-data-resources.html"><i class="fa fa-check"></i><b>8</b> R data resources</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>8.1</b> Environmental data</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="environmental-data.html"><a href="environmental-data.html#abiotic-data"><i class="fa fa-check"></i><b>8.1.1</b> Abiotic data</a></li>
+<li class="chapter" data-level="8.1.2" data-path="environmental-data.html"><a href="environmental-data.html#biotic-data"><i class="fa fa-check"></i><b>8.1.2</b> Biotic data</a></li>
+<li class="chapter" data-level="8.1.3" data-path="environmental-data.html"><a href="environmental-data.html#base-maps"><i class="fa fa-check"></i><b>8.1.3</b> Base maps</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="custom-mapping.html"><a href="custom-mapping.html"><i class="fa fa-check"></i><b>9</b> Custom mapping</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="creating-a-thematic-map.html"><a href="creating-a-thematic-map.html"><i class="fa fa-check"></i><b>9.1</b> Creating a thematic map</a></li>
+<li class="chapter" data-level="9.2" data-path="add-a-temperature-raster.html"><a href="add-a-temperature-raster.html"><i class="fa fa-check"></i><b>9.2</b> Add a temperature raster</a></li>
+<li class="chapter" data-level="9.3" data-path="crop-and-mask-the-temperature-raster-using-quebec-boundary..html"><a href="crop-and-mask-the-temperature-raster-using-quebec-boundary..html"><i class="fa fa-check"></i><b>9.3</b> Crop and mask the temperature raster using quebec boundary.</a></li>
+<li class="chapter" data-level="9.4" data-path="creating-a-simple-layout.html"><a href="creating-a-simple-layout.html"><i class="fa fa-check"></i><b>9.4</b> Creating a simple layout</a></li>
+<li class="chapter" data-level="9.5" data-path="examples-of-complex-layouts.html"><a href="examples-of-complex-layouts.html"><i class="fa fa-check"></i><b>9.5</b> Examples of complex layouts</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="examples-of-complex-layouts.html"><a href="examples-of-complex-layouts.html#setting-data-and-parameters"><i class="fa fa-check"></i><b>9.5.1</b> Setting data and parameters</a></li>
+<li class="chapter" data-level="9.5.2" data-path="examples-of-complex-layouts.html"><a href="examples-of-complex-layouts.html#first-example"><i class="fa fa-check"></i><b>9.5.2</b> First example</a></li>
+<li class="chapter" data-level="9.5.3" data-path="examples-of-complex-layouts.html"><a href="examples-of-complex-layouts.html#second-example"><i class="fa fa-check"></i><b>9.5.3</b> Second example</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R in Space - Custom mapping</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="spatial-objects-attributes-manipulations" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Spatial objects attributes manipulations<a href="spatial-objects-attributes-manipulations.html#spatial-objects-attributes-manipulations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now that we know how to import and transform different classes of spatial objects
+in R, we can start manipulating their attributes. In this post, we will
+make a brief overview of some useful basic manipulations that we can perform
+on spatial object attributes. By no means are those examples exhaustive, but
+they constitute common manipulations that are made with spatial objects.</p>
+<p><br/></p>
+<div id="vector-objects" class="section level3 hasAnchor" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Vector objects<a href="spatial-objects-attributes-manipulations.html#vector-objects" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For this part, we discuss how to manipulate attributes of objects from the <code>sf</code>
+package. <code>sf</code> objects have the advantage of being structured like data frames,
+making their manipulations more intuitive than for objects of class <code>sp</code>. However,
+if the structure of <code>sp</code> objects is well understood, then the same principles
+will mostly apply.</p>
+<p>Let’s begin by creating an <code>sf</code> points object as seen in the post on
+<a href="">Spatial objects in R</a> <!-- to add --></p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb88-1"><a href="spatial-objects-attributes-manipulations.html#cb88-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb88-2"><a href="spatial-objects-attributes-manipulations.html#cb88-2"></a>  <span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>,</span>
+<span id="cb88-3"><a href="spatial-objects-attributes-manipulations.html#cb88-3"></a>  <span class="at">long =</span> <span class="sc">-</span><span class="dv">82</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">runif</span>(<span class="dv">20</span>),</span>
+<span id="cb88-4"><a href="spatial-objects-attributes-manipulations.html#cb88-4"></a>  <span class="at">lat =</span> <span class="dv">42</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">runif</span>(<span class="dv">20</span>),</span>
+<span id="cb88-5"><a href="spatial-objects-attributes-manipulations.html#cb88-5"></a>  <span class="at">var1 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>),</span>
+<span id="cb88-6"><a href="spatial-objects-attributes-manipulations.html#cb88-6"></a>  <span class="at">var2 =</span> <span class="dv">10</span> <span class="sc">*</span> <span class="fu">runif</span>(<span class="dv">20</span>)</span>
+<span id="cb88-7"><a href="spatial-objects-attributes-manipulations.html#cb88-7"></a>)</span>
+<span id="cb88-8"><a href="spatial-objects-attributes-manipulations.html#cb88-8"></a></span>
+<span id="cb88-9"><a href="spatial-objects-attributes-manipulations.html#cb88-9"></a><span class="fu">library</span>(sf)</span>
+<span id="cb88-10"><a href="spatial-objects-attributes-manipulations.html#cb88-10"></a>spatData <span class="ot">&lt;-</span> <span class="fu">st_as_sf</span>(mydata,</span>
+<span id="cb88-11"><a href="spatial-objects-attributes-manipulations.html#cb88-11"></a>  <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">&quot;long&quot;</span>, <span class="st">&quot;lat&quot;</span>),</span>
+<span id="cb88-12"><a href="spatial-objects-attributes-manipulations.html#cb88-12"></a>  <span class="at">crs =</span> <span class="st">&quot;+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0&quot;</span></span>
+<span id="cb88-13"><a href="spatial-objects-attributes-manipulations.html#cb88-13"></a>)</span>
+<span id="cb88-14"><a href="spatial-objects-attributes-manipulations.html#cb88-14"></a></span>
+<span id="cb88-15"><a href="spatial-objects-attributes-manipulations.html#cb88-15"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(spatData))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="right">var2</th>
+<th align="left">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-0.2656208</td>
+<td align="right">4.759596</td>
+<td align="left">POINT (-81.49872 42.14625)</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">-0.4473916</td>
+<td align="right">1.959090</td>
+<td align="left">POINT (-81.90416 43.27473)</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.5489937</td>
+<td align="right">9.644724</td>
+<td align="left">POINT (-80.34889 43.69822)</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.0284773</td>
+<td align="right">4.680517</td>
+<td align="left">POINT (-80.50904 43.53668)</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">-0.0961527</td>
+<td align="right">4.989629</td>
+<td align="left">POINT (-81.23522 43.63335)</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">-1.1786894</td>
+<td align="right">8.523099</td>
+<td align="left">POINT (-81.90933 42.20106)</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb89"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb89-1"><a href="spatial-objects-attributes-manipulations.html#cb89-1"></a><span class="fu">plot</span>(spatData)</span></code></pre></div>
+<p><img src="rInSpace_files/figure-html/sim_points2-1.svg" width="672" /></p>
+</div>
+<div id="adding-and-removing-attributes" class="section level3 hasAnchor" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> Adding and removing attributes<a href="spatial-objects-attributes-manipulations.html#adding-and-removing-attributes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The object we currently have has to variables <code>var1</code> and <code>var2</code>. Additional
+attributes can quickly be added to the attributes table of our objects.</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb90-1"><a href="spatial-objects-attributes-manipulations.html#cb90-1"></a>spatData<span class="sc">$</span>var3 <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">20</span>)</span>
+<span id="cb90-2"><a href="spatial-objects-attributes-manipulations.html#cb90-2"></a>spatData<span class="sc">$</span>var4 <span class="ot">&lt;-</span> spatData<span class="sc">$</span>var1 <span class="sc">*</span> spatData<span class="sc">$</span>var2</span>
+<span id="cb90-3"><a href="spatial-objects-attributes-manipulations.html#cb90-3"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(spatData))</span></code></pre></div>
+<table style="width:100%;">
+<colgroup>
+<col width="4%" />
+<col width="15%" />
+<col width="12%" />
+<col width="37%" />
+<col width="13%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="right">var2</th>
+<th align="left">geometry</th>
+<th align="right">var3</th>
+<th align="right">var4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-0.2656208</td>
+<td align="right">4.759596</td>
+<td align="left">POINT (-81.49872 42.14625)</td>
+<td align="right">0.8109781</td>
+<td align="right">-1.2642476</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">-0.4473916</td>
+<td align="right">1.959090</td>
+<td align="left">POINT (-81.90416 43.27473)</td>
+<td align="right">0.7204655</td>
+<td align="right">-0.8764803</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.5489937</td>
+<td align="right">9.644724</td>
+<td align="left">POINT (-80.34889 43.69822)</td>
+<td align="right">0.5373404</td>
+<td align="right">5.2948924</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.0284773</td>
+<td align="right">4.680517</td>
+<td align="left">POINT (-80.50904 43.53668)</td>
+<td align="right">0.8825313</td>
+<td align="right">0.1332883</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">-0.0961527</td>
+<td align="right">4.989629</td>
+<td align="left">POINT (-81.23522 43.63335)</td>
+<td align="right">0.5776756</td>
+<td align="right">-0.4797662</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">-1.1786894</td>
+<td align="right">8.523099</td>
+<td align="left">POINT (-81.90933 42.20106)</td>
+<td align="right">0.4965744</td>
+<td align="right">-10.0460866</td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<p>Similarly, unwanted columns can be removed.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb91-1"><a href="spatial-objects-attributes-manipulations.html#cb91-1"></a>spatData<span class="sc">$</span>var3 <span class="ot">&lt;-</span> spatData<span class="sc">$</span>var4 <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb91-2"><a href="spatial-objects-attributes-manipulations.html#cb91-2"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(spatData))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="right">var2</th>
+<th align="left">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-0.2656208</td>
+<td align="right">4.759596</td>
+<td align="left">POINT (-81.49872 42.14625)</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">-0.4473916</td>
+<td align="right">1.959090</td>
+<td align="left">POINT (-81.90416 43.27473)</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.5489937</td>
+<td align="right">9.644724</td>
+<td align="left">POINT (-80.34889 43.69822)</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.0284773</td>
+<td align="right">4.680517</td>
+<td align="left">POINT (-80.50904 43.53668)</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">-0.0961527</td>
+<td align="right">4.989629</td>
+<td align="left">POINT (-81.23522 43.63335)</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">-1.1786894</td>
+<td align="right">8.523099</td>
+<td align="left">POINT (-81.90933 42.20106)</td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<p>However, if you have a very big dataset, you may want to remove columns without
+having to write all column names manually! You could do this based on the names
+of the columns you wish to remove or, alternatively, on the names of the
+attributes you wish to keep.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb92-1"><a href="spatial-objects-attributes-manipulations.html#cb92-1"></a><span class="co"># Remove last 20 attributes</span></span>
+<span id="cb92-2"><a href="spatial-objects-attributes-manipulations.html#cb92-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) spatData <span class="ot">&lt;-</span> <span class="fu">cbind</span>(spatData, <span class="at">varSup =</span> <span class="fu">runif</span>(<span class="dv">20</span>))</span>
+<span id="cb92-3"><a href="spatial-objects-attributes-manipulations.html#cb92-3"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(spatData))</span></code></pre></div>
+<table>
+<colgroup>
+<col width="3%" />
+<col width="11%" />
+<col width="9%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="27%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="right">var2</th>
+<th align="right">varSup</th>
+<th align="right">varSup.1</th>
+<th align="right">varSup.2</th>
+<th align="right">varSup.3</th>
+<th align="right">varSup.4</th>
+<th align="left">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-0.2656208</td>
+<td align="right">4.759596</td>
+<td align="right">0.9534384</td>
+<td align="right">0.6138915</td>
+<td align="right">0.1015347</td>
+<td align="right">0.5420090</td>
+<td align="right">0.6238369</td>
+<td align="left">POINT (-81.49872 42.14625)</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">-0.4473916</td>
+<td align="right">1.959090</td>
+<td align="right">0.8681574</td>
+<td align="right">0.4294649</td>
+<td align="right">0.4743601</td>
+<td align="right">0.2269843</td>
+<td align="right">0.8081788</td>
+<td align="left">POINT (-81.90416 43.27473)</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.5489937</td>
+<td align="right">9.644724</td>
+<td align="right">0.1361151</td>
+<td align="right">0.7992288</td>
+<td align="right">0.8391657</td>
+<td align="right">0.5569911</td>
+<td align="right">0.6493939</td>
+<td align="left">POINT (-80.34889 43.69822)</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.0284773</td>
+<td align="right">4.680517</td>
+<td align="right">0.4525283</td>
+<td align="right">0.4184388</td>
+<td align="right">0.7522447</td>
+<td align="right">0.8993869</td>
+<td align="right">0.2867850</td>
+<td align="left">POINT (-80.50904 43.53668)</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">-0.0961527</td>
+<td align="right">4.989629</td>
+<td align="right">0.3083761</td>
+<td align="right">0.5784799</td>
+<td align="right">0.4390189</td>
+<td align="right">0.4630437</td>
+<td align="right">0.9403453</td>
+<td align="left">POINT (-81.23522 43.63335)</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">-1.1786894</td>
+<td align="right">8.523099</td>
+<td align="right">0.4567769</td>
+<td align="right">0.5681770</td>
+<td align="right">0.2781423</td>
+<td align="right">0.2046933</td>
+<td align="right">0.9574098</td>
+<td align="left">POINT (-81.90933 42.20106)</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb93"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb93-1"><a href="spatial-objects-attributes-manipulations.html#cb93-1"></a>rem <span class="ot">&lt;-</span> <span class="fu">colnames</span>(spatData)[<span class="dv">4</span><span class="sc">:</span><span class="dv">8</span>]</span>
+<span id="cb93-2"><a href="spatial-objects-attributes-manipulations.html#cb93-2"></a>spatData <span class="ot">&lt;-</span> spatData[, <span class="sc">!</span><span class="fu">colnames</span>(spatData) <span class="sc">%in%</span> rem]</span>
+<span id="cb93-3"><a href="spatial-objects-attributes-manipulations.html#cb93-3"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(spatData))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="right">var2</th>
+<th align="left">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-0.2656208</td>
+<td align="right">4.759596</td>
+<td align="left">POINT (-81.49872 42.14625)</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">-0.4473916</td>
+<td align="right">1.959090</td>
+<td align="left">POINT (-81.90416 43.27473)</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.5489937</td>
+<td align="right">9.644724</td>
+<td align="left">POINT (-80.34889 43.69822)</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.0284773</td>
+<td align="right">4.680517</td>
+<td align="left">POINT (-80.50904 43.53668)</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">-0.0961527</td>
+<td align="right">4.989629</td>
+<td align="left">POINT (-81.23522 43.63335)</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">-1.1786894</td>
+<td align="right">8.523099</td>
+<td align="left">POINT (-81.90933 42.20106)</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb94"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb94-1"><a href="spatial-objects-attributes-manipulations.html#cb94-1"></a><span class="co"># Keep id, var1 and var2</span></span>
+<span id="cb94-2"><a href="spatial-objects-attributes-manipulations.html#cb94-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) spatData <span class="ot">&lt;-</span> <span class="fu">cbind</span>(spatData, <span class="at">varSup =</span> <span class="fu">runif</span>(<span class="dv">20</span>))</span>
+<span id="cb94-3"><a href="spatial-objects-attributes-manipulations.html#cb94-3"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(spatData))</span></code></pre></div>
+<table>
+<colgroup>
+<col width="3%" />
+<col width="11%" />
+<col width="9%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="27%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="right">var2</th>
+<th align="right">varSup</th>
+<th align="right">varSup.1</th>
+<th align="right">varSup.2</th>
+<th align="right">varSup.3</th>
+<th align="right">varSup.4</th>
+<th align="left">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-0.2656208</td>
+<td align="right">4.759596</td>
+<td align="right">0.7449004</td>
+<td align="right">0.0452048</td>
+<td align="right">0.8988959</td>
+<td align="right">0.0168985</td>
+<td align="right">0.2944407</td>
+<td align="left">POINT (-81.49872 42.14625)</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">-0.4473916</td>
+<td align="right">1.959090</td>
+<td align="right">0.0900476</td>
+<td align="right">0.8871131</td>
+<td align="right">0.1598538</td>
+<td align="right">0.2328176</td>
+<td align="right">0.4268325</td>
+<td align="left">POINT (-81.90416 43.27473)</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.5489937</td>
+<td align="right">9.644724</td>
+<td align="right">0.5445201</td>
+<td align="right">0.2484915</td>
+<td align="right">0.7909352</td>
+<td align="right">0.3587498</td>
+<td align="right">0.4109497</td>
+<td align="left">POINT (-80.34889 43.69822)</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.0284773</td>
+<td align="right">4.680517</td>
+<td align="right">0.6810730</td>
+<td align="right">0.7645665</td>
+<td align="right">0.9036288</td>
+<td align="right">0.4662961</td>
+<td align="right">0.3269100</td>
+<td align="left">POINT (-80.50904 43.53668)</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">-0.0961527</td>
+<td align="right">4.989629</td>
+<td align="right">0.4125643</td>
+<td align="right">0.9801848</td>
+<td align="right">0.2356249</td>
+<td align="right">0.9420042</td>
+<td align="right">0.5674170</td>
+<td align="left">POINT (-81.23522 43.63335)</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">-1.1786894</td>
+<td align="right">8.523099</td>
+<td align="right">0.8083331</td>
+<td align="right">0.2663551</td>
+<td align="right">0.8119234</td>
+<td align="right">0.2049022</td>
+<td align="right">0.4381835</td>
+<td align="left">POINT (-81.90933 42.20106)</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb95"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb95-1"><a href="spatial-objects-attributes-manipulations.html#cb95-1"></a>keep <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span>, <span class="st">&quot;var1&quot;</span>, <span class="st">&quot;var2&quot;</span>)</span>
+<span id="cb95-2"><a href="spatial-objects-attributes-manipulations.html#cb95-2"></a>spatData <span class="ot">&lt;-</span> spatData[, keep]</span>
+<span id="cb95-3"><a href="spatial-objects-attributes-manipulations.html#cb95-3"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(spatData))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="right">var2</th>
+<th align="left">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-0.2656208</td>
+<td align="right">4.759596</td>
+<td align="left">POINT (-81.49872 42.14625)</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">-0.4473916</td>
+<td align="right">1.959090</td>
+<td align="left">POINT (-81.90416 43.27473)</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.5489937</td>
+<td align="right">9.644724</td>
+<td align="left">POINT (-80.34889 43.69822)</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.0284773</td>
+<td align="right">4.680517</td>
+<td align="left">POINT (-80.50904 43.53668)</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">-0.0961527</td>
+<td align="right">4.989629</td>
+<td align="left">POINT (-81.23522 43.63335)</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">-1.1786894</td>
+<td align="right">8.523099</td>
+<td align="left">POINT (-81.90933 42.20106)</td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+</div>
+<div id="subsets" class="section level3 hasAnchor" number="6.1.3">
+<h3><span class="header-section-number">6.1.3</span> Subsets<a href="spatial-objects-attributes-manipulations.html#subsets" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You may also wish to subset your object based on certain attribute values. We
+will begin by adding some factorial attributes to our spatial object to discuss
+this in more detail.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb96-1"><a href="spatial-objects-attributes-manipulations.html#cb96-1"></a>spatData<span class="sc">$</span>fact1 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;a&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) <span class="co"># Create factor with 2 levels</span></span>
+<span id="cb96-2"><a href="spatial-objects-attributes-manipulations.html#cb96-2"></a>spatData<span class="sc">$</span>fact2 <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;b&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>) <span class="co"># Create factor with 5 levels</span></span>
+<span id="cb96-3"><a href="spatial-objects-attributes-manipulations.html#cb96-3"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(spatData))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="right">var2</th>
+<th align="left">geometry</th>
+<th align="left">fact1</th>
+<th align="left">fact2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-0.2656208</td>
+<td align="right">4.759596</td>
+<td align="left">POINT (-81.49872 42.14625)</td>
+<td align="left">a1</td>
+<td align="left">b1</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">-0.4473916</td>
+<td align="right">1.959090</td>
+<td align="left">POINT (-81.90416 43.27473)</td>
+<td align="left">a2</td>
+<td align="left">b2</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.5489937</td>
+<td align="right">9.644724</td>
+<td align="left">POINT (-80.34889 43.69822)</td>
+<td align="left">a1</td>
+<td align="left">b3</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.0284773</td>
+<td align="right">4.680517</td>
+<td align="left">POINT (-80.50904 43.53668)</td>
+<td align="left">a2</td>
+<td align="left">b4</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">-0.0961527</td>
+<td align="right">4.989629</td>
+<td align="left">POINT (-81.23522 43.63335)</td>
+<td align="left">a1</td>
+<td align="left">b5</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">-1.1786894</td>
+<td align="right">8.523099</td>
+<td align="left">POINT (-81.90933 42.20106)</td>
+<td align="left">a2</td>
+<td align="left">b1</td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+<p>The most simple way to subset an attributes table would be to manually select
+the rows that we wish to view. In this instance, let’s say we only wish to
+use the first 10 rows of our data.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb97-1"><a href="spatial-objects-attributes-manipulations.html#cb97-1"></a>selectID <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb97-2"><a href="spatial-objects-attributes-manipulations.html#cb97-2"></a><span class="fu">plot</span>(spatData<span class="sc">$</span>geometry, <span class="at">col =</span> <span class="st">&quot;#00000055&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">1.25</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb97-3"><a href="spatial-objects-attributes-manipulations.html#cb97-3"></a><span class="fu">plot</span>(spatData<span class="sc">$</span>geometry[selectID], <span class="at">col =</span> <span class="st">&quot;#000000&quot;</span>, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">pch =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="rInSpace_files/figure-html/manualSub-1.svg" width="672" /></p>
+<p><br/></p>
+<p>However, subsets based on certain criteria, <em>e.g.</em> all values greater to or
+equal to 0, can be much more efficient to create subsets. These are conditional
+statements and there is a vast body of material available discussing them, so
+we will only present a few examples and invite you to consult other resources
+like <a href="https://stackoverflow.com/">StackOverflow</a> for more specific questions.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb98-1"><a href="spatial-objects-attributes-manipulations.html#cb98-1"></a><span class="co"># Select all values for var1 greater to or equal to 0</span></span>
+<span id="cb98-2"><a href="spatial-objects-attributes-manipulations.html#cb98-2"></a>selectID <span class="ot">&lt;-</span> spatData<span class="sc">$</span>var1 <span class="sc">&gt;=</span> <span class="dv">0</span></span>
+<span id="cb98-3"><a href="spatial-objects-attributes-manipulations.html#cb98-3"></a><span class="fu">plot</span>(spatData<span class="sc">$</span>geometry, <span class="at">col =</span> <span class="st">&quot;#00000055&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">1.25</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb98-4"><a href="spatial-objects-attributes-manipulations.html#cb98-4"></a><span class="fu">plot</span>(spatData<span class="sc">$</span>geometry[selectID], <span class="at">col =</span> <span class="st">&quot;#000000&quot;</span>, <span class="at">add =</span> T, <span class="at">pch =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="rInSpace_files/figure-html/autoSub-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb99-1"><a href="spatial-objects-attributes-manipulations.html#cb99-1"></a><span class="co"># var1 smaller than 0 and var2 higher than 5</span></span>
+<span id="cb99-2"><a href="spatial-objects-attributes-manipulations.html#cb99-2"></a>selectID <span class="ot">&lt;-</span> spatData<span class="sc">$</span>var1 <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> spatData<span class="sc">$</span>var2 <span class="sc">&lt;</span> <span class="dv">5</span></span>
+<span id="cb99-3"><a href="spatial-objects-attributes-manipulations.html#cb99-3"></a><span class="fu">plot</span>(spatData<span class="sc">$</span>geometry, <span class="at">col =</span> <span class="st">&quot;#00000055&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">1.25</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb99-4"><a href="spatial-objects-attributes-manipulations.html#cb99-4"></a><span class="fu">plot</span>(spatData<span class="sc">$</span>geometry[selectID], <span class="at">col =</span> <span class="st">&quot;#000000&quot;</span>, <span class="at">add =</span> T, <span class="at">pch =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="rInSpace_files/figure-html/autoSub-2.svg" width="672" /></p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb100-1"><a href="spatial-objects-attributes-manipulations.html#cb100-1"></a><span class="co"># fact1 equal to a1</span></span>
+<span id="cb100-2"><a href="spatial-objects-attributes-manipulations.html#cb100-2"></a>selectID <span class="ot">&lt;-</span> spatData<span class="sc">$</span>fact1 <span class="sc">==</span> <span class="st">&quot;a1&quot;</span></span>
+<span id="cb100-3"><a href="spatial-objects-attributes-manipulations.html#cb100-3"></a><span class="fu">plot</span>(spatData<span class="sc">$</span>geometry, <span class="at">col =</span> <span class="st">&quot;#00000055&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">1.25</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb100-4"><a href="spatial-objects-attributes-manipulations.html#cb100-4"></a><span class="fu">plot</span>(spatData<span class="sc">$</span>geometry[selectID], <span class="at">col =</span> <span class="st">&quot;#000000&quot;</span>, <span class="at">add =</span> T, <span class="at">pch =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="rInSpace_files/figure-html/autoSub-3.svg" width="672" /></p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb101-1"><a href="spatial-objects-attributes-manipulations.html#cb101-1"></a><span class="co"># fact1 equal to a1 or var1 greater than 0</span></span>
+<span id="cb101-2"><a href="spatial-objects-attributes-manipulations.html#cb101-2"></a>selectID <span class="ot">&lt;-</span> spatData<span class="sc">$</span>fact1 <span class="sc">==</span> <span class="st">&quot;a1&quot;</span> <span class="sc">|</span> spatData<span class="sc">$</span>var1 <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb101-3"><a href="spatial-objects-attributes-manipulations.html#cb101-3"></a><span class="fu">plot</span>(spatData<span class="sc">$</span>geometry, <span class="at">col =</span> <span class="st">&quot;#00000055&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">1.25</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb101-4"><a href="spatial-objects-attributes-manipulations.html#cb101-4"></a><span class="fu">plot</span>(spatData<span class="sc">$</span>geometry[selectID], <span class="at">col =</span> <span class="st">&quot;#000000&quot;</span>, <span class="at">add =</span> T, <span class="at">pch =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="rInSpace_files/figure-html/autoSub-4.svg" width="672" /></p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb102-1"><a href="spatial-objects-attributes-manipulations.html#cb102-1"></a><span class="co"># fact2 equal to b3 or b4</span></span>
+<span id="cb102-2"><a href="spatial-objects-attributes-manipulations.html#cb102-2"></a>selectID <span class="ot">&lt;-</span> spatData<span class="sc">$</span>fact2 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;b3&quot;</span>, <span class="st">&quot;b4&quot;</span>)</span>
+<span id="cb102-3"><a href="spatial-objects-attributes-manipulations.html#cb102-3"></a><span class="fu">plot</span>(spatData<span class="sc">$</span>geometry, <span class="at">col =</span> <span class="st">&quot;#00000055&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">cex =</span> <span class="fl">1.25</span>, <span class="at">main =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb102-4"><a href="spatial-objects-attributes-manipulations.html#cb102-4"></a><span class="fu">plot</span>(spatData<span class="sc">$</span>geometry[selectID], <span class="at">col =</span> <span class="st">&quot;#000000&quot;</span>, <span class="at">add =</span> T, <span class="at">pch =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="rInSpace_files/figure-html/autoSub-5.svg" width="672" /></p>
+<p><br/></p>
+</div>
+<div id="join" class="section level3 hasAnchor" number="6.1.4">
+<h3><span class="header-section-number">6.1.4</span> Join<a href="spatial-objects-attributes-manipulations.html#join" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Joining tables based on their shared id is another common manipulation. This can
+be quickly accomplished using the <code>left_join</code> function from the <code>dplyr</code> package.</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb103-1"><a href="spatial-objects-attributes-manipulations.html#cb103-1"></a><span class="co"># Create data.frame with id field similar to that in the spatial object</span></span>
+<span id="cb103-2"><a href="spatial-objects-attributes-manipulations.html#cb103-2"></a>joinData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="dv">2</span>),</span>
+<span id="cb103-3"><a href="spatial-objects-attributes-manipulations.html#cb103-3"></a>                       <span class="at">var3 =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>))</span>
+<span id="cb103-4"><a href="spatial-objects-attributes-manipulations.html#cb103-4"></a></span>
+<span id="cb103-5"><a href="spatial-objects-attributes-manipulations.html#cb103-5"></a><span class="co"># Join with attributes table of spatial object</span></span>
+<span id="cb103-6"><a href="spatial-objects-attributes-manipulations.html#cb103-6"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<pre><code>#R&gt;  
+#R&gt;  Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>#R&gt;  The following objects are masked from &#39;package:raster&#39;:
+#R&gt;  
+#R&gt;      intersect, select, union</code></pre>
+<pre><code>#R&gt;  The following objects are masked from &#39;package:stats&#39;:
+#R&gt;  
+#R&gt;      filter, lag</code></pre>
+<pre><code>#R&gt;  The following objects are masked from &#39;package:base&#39;:
+#R&gt;  
+#R&gt;      intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb108-1"><a href="spatial-objects-attributes-manipulations.html#cb108-1"></a>spatData <span class="ot">&lt;-</span> <span class="fu">left_join</span>(spatData, joinData)</span></code></pre></div>
+<pre><code>#R&gt;  Joining with `by = join_by(id)`</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb110-1"><a href="spatial-objects-attributes-manipulations.html#cb110-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(spatData))</span></code></pre></div>
+<table>
+<colgroup>
+<col width="4%" />
+<col width="15%" />
+<col width="12%" />
+<col width="8%" />
+<col width="8%" />
+<col width="15%" />
+<col width="36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">var1</th>
+<th align="right">var2</th>
+<th align="left">fact1</th>
+<th align="left">fact2</th>
+<th align="right">var3</th>
+<th align="left">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">-0.2656208</td>
+<td align="right">4.759596</td>
+<td align="left">a1</td>
+<td align="left">b1</td>
+<td align="right">-0.8490988</td>
+<td align="left">POINT (-81.49872 42.14625)</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">-0.4473916</td>
+<td align="right">1.959090</td>
+<td align="left">a2</td>
+<td align="left">b2</td>
+<td align="right">NA</td>
+<td align="left">POINT (-81.90416 43.27473)</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">0.5489937</td>
+<td align="right">9.644724</td>
+<td align="left">a1</td>
+<td align="left">b3</td>
+<td align="right">-1.0932612</td>
+<td align="left">POINT (-80.34889 43.69822)</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">0.0284773</td>
+<td align="right">4.680517</td>
+<td align="left">a2</td>
+<td align="left">b4</td>
+<td align="right">NA</td>
+<td align="left">POINT (-80.50904 43.53668)</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">-0.0961527</td>
+<td align="right">4.989629</td>
+<td align="left">a1</td>
+<td align="left">b5</td>
+<td align="right">-1.0502298</td>
+<td align="left">POINT (-81.23522 43.63335)</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">-1.1786894</td>
+<td align="right">8.523099</td>
+<td align="left">a2</td>
+<td align="left">b1</td>
+<td align="right">NA</td>
+<td align="left">POINT (-81.90933 42.20106)</td>
+</tr>
+</tbody>
+</table>
+<p><br/></p>
+</div>
+<div id="aggregate" class="section level3 hasAnchor" number="6.1.5">
+<h3><span class="header-section-number">6.1.5</span> Aggregate<a href="spatial-objects-attributes-manipulations.html#aggregate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Information contained in a table can also be used to aggregate</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb111-1"><a href="spatial-objects-attributes-manipulations.html#cb111-1"></a>aggData <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(spatData[<span class="st">&#39;var1&#39;</span>], <span class="at">by =</span> <span class="fu">list</span>(spatData<span class="sc">$</span>fact1), <span class="at">FUN =</span> sum)</span>
+<span id="cb111-2"><a href="spatial-objects-attributes-manipulations.html#cb111-2"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(aggData))</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Group.1</th>
+<th align="right">var1</th>
+<th align="left">geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">a1</td>
+<td align="right">2.164414</td>
+<td align="left">MULTIPOINT ((-81.78574 43.2…</td>
+</tr>
+<tr class="even">
+<td align="left">a2</td>
+<td align="right">-2.856789</td>
+<td align="left">MULTIPOINT ((-81.90933 42.2…</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb112"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb112-1"><a href="spatial-objects-attributes-manipulations.html#cb112-1"></a><span class="fu">plot</span>(aggData, <span class="at">cex =</span> <span class="fu">abs</span>(aggData<span class="sc">$</span>var1))</span></code></pre></div>
+<p><img src="rInSpace_files/figure-html/unnamed-chunk-1-1.svg" width="672" /></p>
+<!-- ## Raster objects
+
+Attributes tables associated with raster objects can also be manipulated, although
+the data attached to a raster will typically be less amenable to changes and
+multiple parameters. -->
+
+</div>
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="attribute-manipulations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="geometry-manipulation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": [["Cours_SpatialR.pdf", "pdf"]],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true,
+"edit": "https://github.com/sci1031/sci1031/edit/master/%s"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

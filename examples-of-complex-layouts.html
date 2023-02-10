@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>9.5 Examples of complex layouts | R in Space - Custom mapping</title>
+  <meta name="description" content="9.5 Examples of complex layouts | R in Space - Custom mapping" />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="9.5 Examples of complex layouts | R in Space - Custom mapping" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="9.5 Examples of complex layouts | R in Space - Custom mapping" />
+  
+  
+  
+
+<meta name="author" content="David Beauchesne, Mari-Hélène, Nicolas Casajus, Kevin Caelles, Elliot Dreujou, Steve Vissault" />
+
+
+<meta name="date" content="2023-02-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="creating-a-simple-layout.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/proj4-2.6.2/proj4.min.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.1.1/leaflet-providers-plugin.js"></script>
+<link href="libs/HomeButton-0.0.1/home-button.css" rel="stylesheet" />
+<script src="libs/HomeButton-0.0.1/home-button.js"></script>
+<script src="libs/HomeButton-0.0.1/easy-button-src.min.js"></script>
+<script src="libs/clipboard-0.0.1/setClipboardText.js"></script>
+<link href="libs/mapviewCSS-0.0.1/mapview-popup.css" rel="stylesheet" />
+<link href="libs/mapviewCSS-0.0.1/mapview.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="css/extra.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="#">R in Space</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="so-it-begins.html"><a href="so-it-begins.html"><i class="fa fa-check"></i><b>1.1</b> So it begins</a></li>
+<li class="chapter" data-level="1.2" data-path="beginner-course.html"><a href="beginner-course.html"><i class="fa fa-check"></i><b>1.2</b> Beginner course</a></li>
+<li class="chapter" data-level="1.3" data-path="advanced-course.html"><a href="advanced-course.html"><i class="fa fa-check"></i><b>1.3</b> Advanced course</a></li>
+<li class="chapter" data-level="1.4" data-path="sessioninfo.html"><a href="sessioninfo.html"><i class="fa fa-check"></i><b>1.4</b> SessionInfo</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="useful-resources.html"><a href="useful-resources.html"><i class="fa fa-check"></i><b>2</b> Useful resources</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html"><i class="fa fa-check"></i><b>2.1</b> The mapping landscape has changed!</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#geographic-information-system-gis"><i class="fa fa-check"></i><b>2.1.1</b> Geographic Information System (GIS)</a></li>
+<li class="chapter" data-level="2.1.2" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#web-mapping-tools"><i class="fa fa-check"></i><b>2.1.2</b> Web mapping tools</a></li>
+<li class="chapter" data-level="2.1.3" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#specific-packages-of-various-programming-languages"><i class="fa fa-check"></i><b>2.1.3</b> Specific packages of various programming languages</a>
+<ul>
+<li class="chapter" data-level="2.1.3.1" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#cc-libraries"><i class="fa fa-check"></i><b>2.1.3.1</b> C/C++ libraries:</a></li>
+<li class="chapter" data-level="2.1.3.2" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#javascript"><i class="fa fa-check"></i><b>2.1.3.2</b> JavaScript:</a></li>
+<li class="chapter" data-level="2.1.3.3" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#julia-packages"><i class="fa fa-check"></i><b>2.1.3.3</b> Julia packages</a></li>
+<li class="chapter" data-level="2.1.3.4" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#python-packages"><i class="fa fa-check"></i><b>2.1.3.4</b> Python packages</a></li>
+</ul></li>
+<li class="chapter" data-level="2.1.4" data-path="the-mapping-landscape-has-changed.html"><a href="the-mapping-landscape-has-changed.html#free-gis-data"><i class="fa fa-check"></i><b>2.1.4</b> Free GIS data</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="so-why-use-r-for-mapping.html"><a href="so-why-use-r-for-mapping.html"><i class="fa fa-check"></i><b>2.2</b> So… why use R for mapping?</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="about-spatial-data.html"><a href="about-spatial-data.html"><i class="fa fa-check"></i><b>3</b> About spatial data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="vector-data.html"><a href="vector-data.html"><i class="fa fa-check"></i><b>3.1</b> Vector data</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="vector-data.html"><a href="vector-data.html#points-data"><i class="fa fa-check"></i><b>3.1.1</b> Points data</a></li>
+<li class="chapter" data-level="3.1.2" data-path="vector-data.html"><a href="vector-data.html#lines-data"><i class="fa fa-check"></i><b>3.1.2</b> Lines data</a></li>
+<li class="chapter" data-level="3.1.3" data-path="vector-data.html"><a href="vector-data.html#polygons-data"><i class="fa fa-check"></i><b>3.1.3</b> Polygons data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="raster-data.html"><a href="raster-data.html"><i class="fa fa-check"></i><b>3.2</b> Raster data</a></li>
+<li class="chapter" data-level="3.3" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html"><i class="fa fa-check"></i><b>3.3</b> Vector objects in R</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#package-sp"><i class="fa fa-check"></i><b>3.3.1</b> Package <code>sp</code></a>
+<ul>
+<li class="chapter" data-level="3.3.1.1" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#classes"><i class="fa fa-check"></i><b>3.3.1.1</b> Classes</a></li>
+<li class="chapter" data-level="3.3.1.2" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#spatialpointsdataframe"><i class="fa fa-check"></i><b>3.3.1.2</b> <code>SpatialPointsDataFrame</code></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3.2" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#package-sf"><i class="fa fa-check"></i><b>3.3.2</b> Package <code>sf</code></a>
+<ul>
+<li class="chapter" data-level="3.3.2.1" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#class-sf"><i class="fa fa-check"></i><b>3.3.2.1</b> Class <code>sf</code></a></li>
+<li class="chapter" data-level="3.3.2.2" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#class-sfc"><i class="fa fa-check"></i><b>3.3.2.2</b> Class <code>sfc</code></a></li>
+<li class="chapter" data-level="3.3.2.3" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#class-sfg"><i class="fa fa-check"></i><b>3.3.2.3</b> Class <code>sfg</code></a></li>
+<li class="chapter" data-level="3.3.2.4" data-path="vector-objects-in-r.html"><a href="vector-objects-in-r.html#how-to-import-a-sp-object"><i class="fa fa-check"></i><b>3.3.2.4</b> How to import a <code>sp</code> object</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="raster-objects-in-r.html"><a href="raster-objects-in-r.html"><i class="fa fa-check"></i><b>3.4</b> Raster objects in R</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="raster-objects-in-r.html"><a href="raster-objects-in-r.html#rasterlayer"><i class="fa fa-check"></i><b>3.4.1</b> RasterLayer</a></li>
+<li class="chapter" data-level="3.4.2" data-path="raster-objects-in-r.html"><a href="raster-objects-in-r.html#rasterstack-and-rasterbrick"><i class="fa fa-check"></i><b>3.4.2</b> RasterStack and RasterBrick</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="import-spatial-objects.html"><a href="import-spatial-objects.html"><i class="fa fa-check"></i><b>4</b> Import spatial objects</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="reading-and-writing-spatial-objects-with-sf-and-raster.html"><a href="reading-and-writing-spatial-objects-with-sf-and-raster.html"><i class="fa fa-check"></i><b>4.1</b> Reading and writing spatial objects with <code>sf</code> and <code>raster</code></a></li>
+<li class="chapter" data-level="4.2" data-path="import-spatial-data-from-.csv-file.html"><a href="import-spatial-data-from-.csv-file.html"><i class="fa fa-check"></i><b>4.2</b> Import spatial data from .csv file</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="import-spatial-data-from-.csv-file.html"><a href="import-spatial-data-from-.csv-file.html#convert-a-data-frame-to-simple-feature-objects"><i class="fa fa-check"></i><b>4.2.1</b> Convert a data frame to simple feature objects</a></li>
+<li class="chapter" data-level="4.2.2" data-path="import-spatial-data-from-.csv-file.html"><a href="import-spatial-data-from-.csv-file.html#export-your-points-in-a-shapefile"><i class="fa fa-check"></i><b>4.2.2</b> Export your points in a Shapefile</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="import-shapefile-data.html"><a href="import-shapefile-data.html"><i class="fa fa-check"></i><b>4.3</b> Import Shapefile data</a></li>
+<li class="chapter" data-level="4.4" data-path="import-geojson-file.html"><a href="import-geojson-file.html"><i class="fa fa-check"></i><b>4.4</b> Import GeoJSON file</a></li>
+<li class="chapter" data-level="4.5" data-path="import-raster-data.html"><a href="import-raster-data.html"><i class="fa fa-check"></i><b>4.5</b> Import raster data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="basic-mapping.html"><a href="basic-mapping.html"><i class="fa fa-check"></i><b>5</b> Basic mapping</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="plot-methods-for-sp-objects.html"><a href="plot-methods-for-sp-objects.html"><i class="fa fa-check"></i><b>5.1</b> Plot methods for <code>sp</code> objects</a></li>
+<li class="chapter" data-level="5.2" data-path="plot-methods-for-sf-objects.html"><a href="plot-methods-for-sf-objects.html"><i class="fa fa-check"></i><b>5.2</b> plot methods for <code>sf</code> objects</a></li>
+<li class="chapter" data-level="5.3" data-path="plot-methods-for-raster-objects.html"><a href="plot-methods-for-raster-objects.html"><i class="fa fa-check"></i><b>5.3</b> plot methods for <code>raster</code> objects</a></li>
+<li class="chapter" data-level="5.4" data-path="plotting-together-sf-and-raster-objects.html"><a href="plotting-together-sf-and-raster-objects.html"><i class="fa fa-check"></i><b>5.4</b> plotting together <code>sf</code> and <code>raster</code> objects</a></li>
+<li class="chapter" data-level="5.5" data-path="package-mapview.html"><a href="package-mapview.html"><i class="fa fa-check"></i><b>5.5</b> Package <code>mapview</code></a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="attribute-manipulations.html"><a href="attribute-manipulations.html"><i class="fa fa-check"></i><b>6</b> Attribute manipulations</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="spatial-objects-attributes-manipulations.html"><a href="spatial-objects-attributes-manipulations.html"><i class="fa fa-check"></i><b>6.1</b> Spatial objects attributes manipulations</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="spatial-objects-attributes-manipulations.html"><a href="spatial-objects-attributes-manipulations.html#vector-objects"><i class="fa fa-check"></i><b>6.1.1</b> Vector objects</a></li>
+<li class="chapter" data-level="6.1.2" data-path="spatial-objects-attributes-manipulations.html"><a href="spatial-objects-attributes-manipulations.html#adding-and-removing-attributes"><i class="fa fa-check"></i><b>6.1.2</b> Adding and removing attributes</a></li>
+<li class="chapter" data-level="6.1.3" data-path="spatial-objects-attributes-manipulations.html"><a href="spatial-objects-attributes-manipulations.html#subsets"><i class="fa fa-check"></i><b>6.1.3</b> Subsets</a></li>
+<li class="chapter" data-level="6.1.4" data-path="spatial-objects-attributes-manipulations.html"><a href="spatial-objects-attributes-manipulations.html#join"><i class="fa fa-check"></i><b>6.1.4</b> Join</a></li>
+<li class="chapter" data-level="6.1.5" data-path="spatial-objects-attributes-manipulations.html"><a href="spatial-objects-attributes-manipulations.html#aggregate"><i class="fa fa-check"></i><b>6.1.5</b> Aggregate</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="geometry-manipulation.html"><a href="geometry-manipulation.html"><i class="fa fa-check"></i><b>7</b> Geometry manipulation</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="sp-objects.html"><a href="sp-objects.html"><i class="fa fa-check"></i><b>7.1</b> <code>sp</code> objects</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="sp-objects.html"><a href="sp-objects.html#subset"><i class="fa fa-check"></i><b>7.1.1</b> Subset</a></li>
+<li class="chapter" data-level="7.1.2" data-path="sp-objects.html"><a href="sp-objects.html#unions"><i class="fa fa-check"></i><b>7.1.2</b> Unions</a></li>
+<li class="chapter" data-level="7.1.3" data-path="sp-objects.html"><a href="sp-objects.html#buffers"><i class="fa fa-check"></i><b>7.1.3</b> Buffers</a></li>
+<li class="chapter" data-level="7.1.4" data-path="sp-objects.html"><a href="sp-objects.html#intersections"><i class="fa fa-check"></i><b>7.1.4</b> Intersections</a></li>
+<li class="chapter" data-level="7.1.5" data-path="sp-objects.html"><a href="sp-objects.html#differences"><i class="fa fa-check"></i><b>7.1.5</b> Differences</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="overlays.html"><a href="overlays.html"><i class="fa fa-check"></i><b>7.2</b> Overlays</a></li>
+<li class="chapter" data-level="7.3" data-path="sf-objects.html"><a href="sf-objects.html"><i class="fa fa-check"></i><b>7.3</b> <code>sf</code> objects</a></li>
+<li class="chapter" data-level="7.4" data-path="raster-objects.html"><a href="raster-objects.html"><i class="fa fa-check"></i><b>7.4</b> <code>raster</code> objects</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="raster-objects.html"><a href="raster-objects.html#extract-values"><i class="fa fa-check"></i><b>7.4.1</b> Extract values</a></li>
+<li class="chapter" data-level="7.4.2" data-path="raster-objects.html"><a href="raster-objects.html#mask"><i class="fa fa-check"></i><b>7.4.2</b> Mask</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="r-data-resources.html"><a href="r-data-resources.html"><i class="fa fa-check"></i><b>8</b> R data resources</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="environmental-data.html"><a href="environmental-data.html"><i class="fa fa-check"></i><b>8.1</b> Environmental data</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="environmental-data.html"><a href="environmental-data.html#abiotic-data"><i class="fa fa-check"></i><b>8.1.1</b> Abiotic data</a></li>
+<li class="chapter" data-level="8.1.2" data-path="environmental-data.html"><a href="environmental-data.html#biotic-data"><i class="fa fa-check"></i><b>8.1.2</b> Biotic data</a></li>
+<li class="chapter" data-level="8.1.3" data-path="environmental-data.html"><a href="environmental-data.html#base-maps"><i class="fa fa-check"></i><b>8.1.3</b> Base maps</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="custom-mapping.html"><a href="custom-mapping.html"><i class="fa fa-check"></i><b>9</b> Custom mapping</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="creating-a-thematic-map.html"><a href="creating-a-thematic-map.html"><i class="fa fa-check"></i><b>9.1</b> Creating a thematic map</a></li>
+<li class="chapter" data-level="9.2" data-path="add-a-temperature-raster.html"><a href="add-a-temperature-raster.html"><i class="fa fa-check"></i><b>9.2</b> Add a temperature raster</a></li>
+<li class="chapter" data-level="9.3" data-path="crop-and-mask-the-temperature-raster-using-quebec-boundary..html"><a href="crop-and-mask-the-temperature-raster-using-quebec-boundary..html"><i class="fa fa-check"></i><b>9.3</b> Crop and mask the temperature raster using quebec boundary.</a></li>
+<li class="chapter" data-level="9.4" data-path="creating-a-simple-layout.html"><a href="creating-a-simple-layout.html"><i class="fa fa-check"></i><b>9.4</b> Creating a simple layout</a></li>
+<li class="chapter" data-level="9.5" data-path="examples-of-complex-layouts.html"><a href="examples-of-complex-layouts.html"><i class="fa fa-check"></i><b>9.5</b> Examples of complex layouts</a>
+<ul>
+<li class="chapter" data-level="9.5.1" data-path="examples-of-complex-layouts.html"><a href="examples-of-complex-layouts.html#setting-data-and-parameters"><i class="fa fa-check"></i><b>9.5.1</b> Setting data and parameters</a></li>
+<li class="chapter" data-level="9.5.2" data-path="examples-of-complex-layouts.html"><a href="examples-of-complex-layouts.html#first-example"><i class="fa fa-check"></i><b>9.5.2</b> First example</a></li>
+<li class="chapter" data-level="9.5.3" data-path="examples-of-complex-layouts.html"><a href="examples-of-complex-layouts.html#second-example"><i class="fa fa-check"></i><b>9.5.3</b> Second example</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R in Space - Custom mapping</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="examples-of-complex-layouts" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> Examples of complex layouts<a href="examples-of-complex-layouts.html#examples-of-complex-layouts" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <code>layout()</code> function can be used to produce simple to very complex layouts
+for figures. The previous figure was a rather simple example and we will show
+two other examples from a scientific article that David is currently wrapping up.
+These examples are simply to help visualizing the fact that as long as you can
+position elements on a two-dimensional cartesian plane, than you can create
+whatever visual you may have in mind with R.</p>
+<div id="setting-data-and-parameters" class="section level3 hasAnchor" number="9.5.1">
+<h3><span class="header-section-number">9.5.1</span> Setting data and parameters<a href="examples-of-complex-layouts.html#setting-data-and-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s begin with getting data! The data for the original figure
+is inacessible (for now), so we will access marine abiotic data
+using the <code>sdmpredictors</code> package. The original figure is however
+show at the end of the post, and the data should become openly available
+soon.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb163-1"><a href="examples-of-complex-layouts.html#cb163-1"></a><span class="fu">library</span>(sdmpredictors)</span>
+<span id="cb163-2"><a href="examples-of-complex-layouts.html#cb163-2"></a><span class="fu">library</span>(magrittr)</span></code></pre></div>
+<pre><code>#R&gt;  
+#R&gt;  Attaching package: &#39;magrittr&#39;</code></pre>
+<pre><code>#R&gt;  The following object is masked from &#39;package:raster&#39;:
+#R&gt;  
+#R&gt;      extract</code></pre>
+<div class="sourceCode" id="cb166"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb166-1"><a href="examples-of-complex-layouts.html#cb166-1"></a><span class="fu">library</span>(MASS)</span></code></pre></div>
+<pre><code>#R&gt;  
+#R&gt;  Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>#R&gt;  The following object is masked from &#39;package:dplyr&#39;:
+#R&gt;  
+#R&gt;      select</code></pre>
+<pre><code>#R&gt;  The following objects are masked from &#39;package:raster&#39;:
+#R&gt;  
+#R&gt;      area, select</code></pre>
+<div class="sourceCode" id="cb170"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb170-1"><a href="examples-of-complex-layouts.html#cb170-1"></a><span class="fu">library</span>(graphicsutils)</span></code></pre></div>
+<pre><code>#R&gt;  
+#R&gt;  Attaching package: &#39;graphicsutils&#39;</code></pre>
+<pre><code>#R&gt;  The following object is masked from &#39;package:sp&#39;:
+#R&gt;  
+#R&gt;      compassRose</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb173-1"><a href="examples-of-complex-layouts.html#cb173-1"></a><span class="co"># Extent of area of interest</span></span>
+<span id="cb173-2"><a href="examples-of-complex-layouts.html#cb173-2"></a>latmax <span class="ot">&lt;-</span> <span class="fl">52.01312</span></span>
+<span id="cb173-3"><a href="examples-of-complex-layouts.html#cb173-3"></a>latmin <span class="ot">&lt;-</span> <span class="fl">45.52399</span></span>
+<span id="cb173-4"><a href="examples-of-complex-layouts.html#cb173-4"></a>lonmax <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">55.73636</span></span>
+<span id="cb173-5"><a href="examples-of-complex-layouts.html#cb173-5"></a>lonmin <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">71.06333</span></span>
+<span id="cb173-6"><a href="examples-of-complex-layouts.html#cb173-6"></a></span>
+<span id="cb173-7"><a href="examples-of-complex-layouts.html#cb173-7"></a><span class="co"># Focal, local area</span></span>
+<span id="cb173-8"><a href="examples-of-complex-layouts.html#cb173-8"></a>xmn <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">67</span></span>
+<span id="cb173-9"><a href="examples-of-complex-layouts.html#cb173-9"></a>xmx <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">63</span></span>
+<span id="cb173-10"><a href="examples-of-complex-layouts.html#cb173-10"></a>ymn <span class="ot">&lt;-</span> <span class="dv">49</span></span>
+<span id="cb173-11"><a href="examples-of-complex-layouts.html#cb173-11"></a>ymx <span class="ot">&lt;-</span> <span class="dv">51</span></span>
+<span id="cb173-12"><a href="examples-of-complex-layouts.html#cb173-12"></a></span>
+<span id="cb173-13"><a href="examples-of-complex-layouts.html#cb173-13"></a></span>
+<span id="cb173-14"><a href="examples-of-complex-layouts.html#cb173-14"></a><span class="co"># Import marine layers</span></span>
+<span id="cb173-15"><a href="examples-of-complex-layouts.html#cb173-15"></a>layers <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;BO_dissox&quot;</span>, <span class="st">&quot;BO_sstmean&quot;</span>)</span>
+<span id="cb173-16"><a href="examples-of-complex-layouts.html#cb173-16"></a>envCov <span class="ot">&lt;-</span> sdmpredictors<span class="sc">::</span><span class="fu">load_layers</span>(layers, <span class="at">datadir =</span> <span class="st">&quot;data&quot;</span>, <span class="at">rasterstack =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb173-17"><a href="examples-of-complex-layouts.html#cb173-17"></a></span>
+<span id="cb173-18"><a href="examples-of-complex-layouts.html#cb173-18"></a><span class="co"># Crop and build raster stack</span></span>
+<span id="cb173-19"><a href="examples-of-complex-layouts.html#cb173-19"></a>envCov <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">crop</span>(envCov, raster<span class="sc">::</span><span class="fu">extent</span>(lonmin, lonmax, latmin, latmax)) <span class="sc">%&gt;%</span></span>
+<span id="cb173-20"><a href="examples-of-complex-layouts.html#cb173-20"></a>  raster<span class="sc">::</span><span class="fu">stack</span>()</span>
+<span id="cb173-21"><a href="examples-of-complex-layouts.html#cb173-21"></a></span>
+<span id="cb173-22"><a href="examples-of-complex-layouts.html#cb173-22"></a><span class="co"># Visualize data</span></span>
+<span id="cb173-23"><a href="examples-of-complex-layouts.html#cb173-23"></a>raster<span class="sc">::</span><span class="fu">plot</span>(envCov)</span></code></pre></div>
+<p><img src="rInSpace_files/figure-html/getData-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb174-1"><a href="examples-of-complex-layouts.html#cb174-1"></a><span class="co"># For this graph, we will normalize the values</span></span>
+<span id="cb174-2"><a href="examples-of-complex-layouts.html#cb174-2"></a><span class="fu">values</span>(envCov[[<span class="dv">1</span>]]) <span class="ot">&lt;-</span> <span class="fu">values</span>(envCov[[<span class="dv">1</span>]]) <span class="sc">/</span> <span class="fu">max</span>(<span class="fu">values</span>(envCov[[<span class="dv">1</span>]]), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb174-3"><a href="examples-of-complex-layouts.html#cb174-3"></a><span class="fu">values</span>(envCov[[<span class="dv">2</span>]]) <span class="ot">&lt;-</span> <span class="fu">values</span>(envCov[[<span class="dv">2</span>]]) <span class="sc">/</span> <span class="fu">max</span>(<span class="fu">values</span>(envCov[[<span class="dv">2</span>]]), <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>We will also need certain elements, such as a custom color palette, for this figure.</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb175-1"><a href="examples-of-complex-layouts.html#cb175-1"></a><span class="co"># Color palette</span></span>
+<span id="cb175-2"><a href="examples-of-complex-layouts.html#cb175-2"></a>cols <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb175-3"><a href="examples-of-complex-layouts.html#cb175-3"></a>  <span class="st">&quot;#f4f4f4&quot;</span>, <span class="st">&quot;#C7CBCE&quot;</span>, <span class="st">&quot;#96A3A3&quot;</span>, <span class="st">&quot;#687677&quot;</span>, <span class="st">&quot;#222D3D&quot;</span>, <span class="st">&quot;#25364A&quot;</span>,</span>
+<span id="cb175-4"><a href="examples-of-complex-layouts.html#cb175-4"></a>  <span class="st">&quot;#C77F20&quot;</span>, <span class="st">&quot;#E69831&quot;</span>, <span class="st">&quot;#E3AF16&quot;</span>, <span class="st">&quot;#E4BE29&quot;</span>, <span class="st">&quot;#F2EA8B&quot;</span></span>
+<span id="cb175-5"><a href="examples-of-complex-layouts.html#cb175-5"></a>)</span>
+<span id="cb175-6"><a href="examples-of-complex-layouts.html#cb175-6"></a>rbPal <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(cols)</span>
+<span id="cb175-7"><a href="examples-of-complex-layouts.html#cb175-7"></a></span>
+<span id="cb175-8"><a href="examples-of-complex-layouts.html#cb175-8"></a><span class="co"># Custom color bar function</span></span>
+<span id="cb175-9"><a href="examples-of-complex-layouts.html#cb175-9"></a>colorBar <span class="ot">&lt;-</span> <span class="cf">function</span>(colRamp, min, <span class="at">max =</span> <span class="sc">-</span>min, <span class="at">nticks =</span> <span class="dv">11</span>, <span class="at">ticks =</span> <span class="fu">seq</span>(min, max, <span class="at">len =</span> nticks), <span class="at">title =</span> <span class="st">&quot;&quot;</span>, ...) {</span>
+<span id="cb175-10"><a href="examples-of-complex-layouts.html#cb175-10"></a>  scale <span class="ot">&lt;-</span> (<span class="fu">length</span>(colRamp) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> (max <span class="sc">-</span> min)</span>
+<span id="cb175-11"><a href="examples-of-complex-layouts.html#cb175-11"></a>  <span class="fu">plot</span>(<span class="fu">c</span>(min, max), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xaxt =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">yaxt =</span> <span class="st">&quot;n&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="at">main =</span> title, ...)</span>
+<span id="cb175-12"><a href="examples-of-complex-layouts.html#cb175-12"></a>  <span class="fu">axis</span>(<span class="dv">1</span>, ticks, <span class="at">las =</span> <span class="dv">1</span>, ...)</span>
+<span id="cb175-13"><a href="examples-of-complex-layouts.html#cb175-13"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(colRamp) <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb175-14"><a href="examples-of-complex-layouts.html#cb175-14"></a>    y <span class="ot">&lt;-</span> (i <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> scale <span class="sc">+</span> min</span>
+<span id="cb175-15"><a href="examples-of-complex-layouts.html#cb175-15"></a>    <span class="fu">rect</span>(y, <span class="dv">0</span>, y <span class="sc">+</span> <span class="dv">1</span> <span class="sc">/</span> scale, <span class="dv">10</span>, <span class="at">col =</span> colRamp[i], <span class="at">border =</span> <span class="cn">NA</span>)</span>
+<span id="cb175-16"><a href="examples-of-complex-layouts.html#cb175-16"></a>  }</span>
+<span id="cb175-17"><a href="examples-of-complex-layouts.html#cb175-17"></a>}</span></code></pre></div>
+</div>
+<div id="first-example" class="section level3 hasAnchor" number="9.5.2">
+<h3><span class="header-section-number">9.5.2</span> First example<a href="examples-of-complex-layouts.html#first-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now we can build a more complicated figure worthy of a scientific article.
+Let’s begin with a first layout example for a complex four panel figure.</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb176-1"><a href="examples-of-complex-layouts.html#cb176-1"></a><span class="co"># Layout</span></span>
+<span id="cb176-2"><a href="examples-of-complex-layouts.html#cb176-2"></a>mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="dv">28</span>, <span class="dv">32</span>)</span>
+<span id="cb176-3"><a href="examples-of-complex-layouts.html#cb176-3"></a>mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb176-4"><a href="examples-of-complex-layouts.html#cb176-4"></a>mat[<span class="dv">15</span><span class="sc">:</span><span class="dv">26</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">16</span>] <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb176-5"><a href="examples-of-complex-layouts.html#cb176-5"></a>mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="dv">17</span><span class="sc">:</span><span class="dv">32</span>] <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb176-6"><a href="examples-of-complex-layouts.html#cb176-6"></a>mat[<span class="dv">18</span><span class="sc">:</span><span class="dv">28</span>, <span class="dv">17</span><span class="sc">:</span><span class="dv">29</span>] <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb176-7"><a href="examples-of-complex-layouts.html#cb176-7"></a>mat[<span class="dv">15</span><span class="sc">:</span><span class="dv">17</span>, <span class="dv">17</span><span class="sc">:</span><span class="dv">29</span>] <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb176-8"><a href="examples-of-complex-layouts.html#cb176-8"></a>mat[<span class="dv">18</span><span class="sc">:</span><span class="dv">28</span>, <span class="dv">30</span><span class="sc">:</span><span class="dv">32</span>] <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb176-9"><a href="examples-of-complex-layouts.html#cb176-9"></a>mat[<span class="dv">13</span><span class="sc">:</span><span class="dv">14</span>, <span class="dv">6</span><span class="sc">:</span><span class="dv">11</span>] <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb176-10"><a href="examples-of-complex-layouts.html#cb176-10"></a>mat[<span class="dv">27</span><span class="sc">:</span><span class="dv">28</span>, <span class="dv">6</span><span class="sc">:</span><span class="dv">11</span>] <span class="ot">&lt;-</span> <span class="dv">8</span></span>
+<span id="cb176-11"><a href="examples-of-complex-layouts.html#cb176-11"></a>mat[<span class="dv">13</span><span class="sc">:</span><span class="dv">14</span>, <span class="dv">22</span><span class="sc">:</span><span class="dv">27</span>] <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb176-12"><a href="examples-of-complex-layouts.html#cb176-12"></a>mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">15</span><span class="sc">:</span><span class="dv">16</span>] <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb176-13"><a href="examples-of-complex-layouts.html#cb176-13"></a>mat[<span class="dv">15</span><span class="sc">:</span><span class="dv">16</span>, <span class="dv">15</span><span class="sc">:</span><span class="dv">16</span>] <span class="ot">&lt;-</span> <span class="dv">11</span></span>
+<span id="cb176-14"><a href="examples-of-complex-layouts.html#cb176-14"></a>mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">31</span><span class="sc">:</span><span class="dv">32</span>] <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb176-15"><a href="examples-of-complex-layouts.html#cb176-15"></a>mat[<span class="dv">15</span><span class="sc">:</span><span class="dv">16</span>, <span class="dv">31</span><span class="sc">:</span><span class="dv">32</span>] <span class="ot">&lt;-</span> <span class="dv">13</span></span>
+<span id="cb176-16"><a href="examples-of-complex-layouts.html#cb176-16"></a><span class="fu">layout</span>(mat)</span>
+<span id="cb176-17"><a href="examples-of-complex-layouts.html#cb176-17"></a><span class="fu">layout.show</span>(<span class="dv">13</span>)</span></code></pre></div>
+<p><img src="rInSpace_files/figure-html/layout1-1.svg" width="672" /></p>
+<p>The elements on this complex layout will be drawn sequentially following the
+order specified in the layout matrix.</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb177-1"><a href="examples-of-complex-layouts.html#cb177-1"></a><span class="fu">layout</span>(mat)</span>
+<span id="cb177-2"><a href="examples-of-complex-layouts.html#cb177-2"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb177-3"><a href="examples-of-complex-layouts.html#cb177-3"></a></span>
+<span id="cb177-4"><a href="examples-of-complex-layouts.html#cb177-4"></a><span class="co"># Plot 1</span></span>
+<span id="cb177-5"><a href="examples-of-complex-layouts.html#cb177-5"></a><span class="fu">image</span>(envCov[[<span class="dv">1</span>]], <span class="at">col =</span> <span class="fu">rbPal</span>(<span class="dv">100</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb177-6"><a href="examples-of-complex-layouts.html#cb177-6"></a></span>
+<span id="cb177-7"><a href="examples-of-complex-layouts.html#cb177-7"></a><span class="co"># Plot 2</span></span>
+<span id="cb177-8"><a href="examples-of-complex-layouts.html#cb177-8"></a><span class="fu">image</span>(envCov[[<span class="dv">2</span>]], <span class="at">col =</span> <span class="fu">rbPal</span>(<span class="dv">100</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb177-9"><a href="examples-of-complex-layouts.html#cb177-9"></a></span>
+<span id="cb177-10"><a href="examples-of-complex-layouts.html#cb177-10"></a><span class="co"># Plot 3</span></span>
+<span id="cb177-11"><a href="examples-of-complex-layouts.html#cb177-11"></a><span class="fu">image</span>(envCov[[<span class="dv">1</span>]] <span class="sc">+</span> envCov[[<span class="dv">2</span>]], <span class="at">col =</span> <span class="fu">rbPal</span>(<span class="dv">100</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb177-12"><a href="examples-of-complex-layouts.html#cb177-12"></a></span>
+<span id="cb177-13"><a href="examples-of-complex-layouts.html#cb177-13"></a><span class="co"># Plot 4</span></span>
+<span id="cb177-14"><a href="examples-of-complex-layouts.html#cb177-14"></a><span class="co"># Select only values that are not == 0</span></span>
+<span id="cb177-15"><a href="examples-of-complex-layouts.html#cb177-15"></a>notEmpty <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(<span class="fu">values</span>(envCov[[<span class="dv">1</span>]]))</span>
+<span id="cb177-16"><a href="examples-of-complex-layouts.html#cb177-16"></a></span>
+<span id="cb177-17"><a href="examples-of-complex-layouts.html#cb177-17"></a><span class="co"># 2D kernel estimation</span></span>
+<span id="cb177-18"><a href="examples-of-complex-layouts.html#cb177-18"></a>f1 <span class="ot">&lt;-</span> <span class="fu">kde2d</span>(</span>
+<span id="cb177-19"><a href="examples-of-complex-layouts.html#cb177-19"></a>  <span class="at">x =</span> <span class="fu">values</span>(envCov[[<span class="dv">1</span>]])[notEmpty],</span>
+<span id="cb177-20"><a href="examples-of-complex-layouts.html#cb177-20"></a>  <span class="at">y =</span> <span class="fu">values</span>(envCov[[<span class="dv">2</span>]])[notEmpty],</span>
+<span id="cb177-21"><a href="examples-of-complex-layouts.html#cb177-21"></a>  <span class="at">n =</span> <span class="dv">500</span>, <span class="co"># put 500 for final figure</span></span>
+<span id="cb177-22"><a href="examples-of-complex-layouts.html#cb177-22"></a>  <span class="at">lims =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb177-23"><a href="examples-of-complex-layouts.html#cb177-23"></a>)</span>
+<span id="cb177-24"><a href="examples-of-complex-layouts.html#cb177-24"></a></span>
+<span id="cb177-25"><a href="examples-of-complex-layouts.html#cb177-25"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb177-26"><a href="examples-of-complex-layouts.html#cb177-26"></a>graphicsutils<span class="sc">::</span><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb177-27"><a href="examples-of-complex-layouts.html#cb177-27"></a><span class="fu">image</span>(f1, <span class="at">zlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(f1<span class="sc">$</span>z)), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;#ffffff&quot;</span>, <span class="fu">rbPal</span>(<span class="dv">99</span>)), <span class="at">add =</span> T)</span>
+<span id="cb177-28"><a href="examples-of-complex-layouts.html#cb177-28"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>), <span class="at">line =</span> <span class="sc">-</span>.<span class="dv">25</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb177-29"><a href="examples-of-complex-layouts.html#cb177-29"></a><span class="fu">axis</span>(<span class="dv">2</span>, <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.1</span>), <span class="at">las =</span> <span class="dv">2</span>, <span class="at">line =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb177-30"><a href="examples-of-complex-layouts.html#cb177-30"></a><span class="fu">mtext</span>(<span class="st">&quot;Dissolved oxygen&quot;</span>, <span class="dv">1</span>, <span class="at">line =</span> <span class="fl">2.5</span>, <span class="at">font =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb177-31"><a href="examples-of-complex-layouts.html#cb177-31"></a><span class="fu">mtext</span>(<span class="st">&quot;Sea surface temperature&quot;</span>, <span class="dv">2</span>, <span class="at">line =</span> <span class="fl">2.5</span>, <span class="at">font =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb177-32"><a href="examples-of-complex-layouts.html#cb177-32"></a></span>
+<span id="cb177-33"><a href="examples-of-complex-layouts.html#cb177-33"></a><span class="co"># Plot 5</span></span>
+<span id="cb177-34"><a href="examples-of-complex-layouts.html#cb177-34"></a>dens <span class="ot">&lt;-</span> <span class="fu">density</span>(<span class="fu">values</span>(envCov[[<span class="dv">1</span>]])[notEmpty], <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>)</span>
+<span id="cb177-35"><a href="examples-of-complex-layouts.html#cb177-35"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb177-36"><a href="examples-of-complex-layouts.html#cb177-36"></a>graphicsutils<span class="sc">::</span><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">ceiling</span>(<span class="fu">max</span>(dens<span class="sc">$</span>y))))</span>
+<span id="cb177-37"><a href="examples-of-complex-layouts.html#cb177-37"></a><span class="fu">polygon</span>(<span class="at">x =</span> <span class="fu">c</span>(dens<span class="sc">$</span>x, <span class="dv">1</span>), <span class="at">y =</span> <span class="fu">c</span>(dens<span class="sc">$</span>y, <span class="dv">0</span>), <span class="at">col =</span> cols[<span class="dv">5</span>], <span class="at">border =</span> cols[<span class="dv">5</span>], <span class="at">lwd =</span> <span class="dv">1</span>)</span>
+<span id="cb177-38"><a href="examples-of-complex-layouts.html#cb177-38"></a><span class="fu">axis</span>(<span class="dv">2</span>, <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">ceiling</span>(<span class="fu">max</span>(dens<span class="sc">$</span>y))), <span class="at">lwd =</span> <span class="fl">0.5</span>, <span class="at">line =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">las =</span> <span class="dv">2</span>)</span>
+<span id="cb177-39"><a href="examples-of-complex-layouts.html#cb177-39"></a><span class="fu">mtext</span>(<span class="st">&quot;Density&quot;</span>, <span class="dv">2</span>, <span class="at">line =</span> <span class="fl">2.5</span>, <span class="at">font =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb177-40"><a href="examples-of-complex-layouts.html#cb177-40"></a></span>
+<span id="cb177-41"><a href="examples-of-complex-layouts.html#cb177-41"></a><span class="co"># Plot 6</span></span>
+<span id="cb177-42"><a href="examples-of-complex-layouts.html#cb177-42"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb177-43"><a href="examples-of-complex-layouts.html#cb177-43"></a>dens <span class="ot">&lt;-</span> <span class="fu">density</span>(<span class="fu">values</span>(envCov[[<span class="dv">2</span>]])[notEmpty], <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">1</span>)</span>
+<span id="cb177-44"><a href="examples-of-complex-layouts.html#cb177-44"></a>graphicsutils<span class="sc">::</span><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">ceiling</span>(<span class="fu">max</span>(dens<span class="sc">$</span>y))), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb177-45"><a href="examples-of-complex-layouts.html#cb177-45"></a><span class="fu">polygon</span>(<span class="at">x =</span> <span class="fu">c</span>(dens<span class="sc">$</span>x, <span class="dv">1</span>), <span class="at">y =</span> <span class="fu">c</span>(dens<span class="sc">$</span>y, <span class="dv">0</span>), <span class="at">col =</span> cols[<span class="dv">5</span>], <span class="at">border =</span> cols[<span class="dv">5</span>], <span class="at">lwd =</span> <span class="dv">1</span>)</span>
+<span id="cb177-46"><a href="examples-of-complex-layouts.html#cb177-46"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">ceiling</span>(<span class="fu">max</span>(dens<span class="sc">$</span>y))), <span class="at">line =</span> <span class="sc">-</span>.<span class="dv">25</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb177-47"><a href="examples-of-complex-layouts.html#cb177-47"></a><span class="fu">mtext</span>(<span class="st">&quot;Density&quot;</span>, <span class="dv">1</span>, <span class="at">line =</span> <span class="fl">2.5</span>, <span class="at">font =</span> <span class="dv">1</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb177-48"><a href="examples-of-complex-layouts.html#cb177-48"></a></span>
+<span id="cb177-49"><a href="examples-of-complex-layouts.html#cb177-49"></a><span class="co"># plot 7</span></span>
+<span id="cb177-50"><a href="examples-of-complex-layouts.html#cb177-50"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb177-51"><a href="examples-of-complex-layouts.html#cb177-51"></a><span class="fu">colorBar</span>(<span class="fu">rbPal</span>(<span class="dv">100</span>), <span class="at">nticks =</span> <span class="dv">6</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb177-52"><a href="examples-of-complex-layouts.html#cb177-52"></a><span class="fu">rect</span>(<span class="at">xleft =</span> <span class="dv">0</span>, <span class="at">ybottom =</span> <span class="dv">0</span>, <span class="at">xright =</span> <span class="dv">1</span>, <span class="at">ytop =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb177-53"><a href="examples-of-complex-layouts.html#cb177-53"></a><span class="fu">mtext</span>(<span class="st">&quot;Dissolved oxygen&quot;</span>, <span class="dv">3</span>, <span class="at">line =</span> <span class="fl">0.5</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb177-54"><a href="examples-of-complex-layouts.html#cb177-54"></a></span>
+<span id="cb177-55"><a href="examples-of-complex-layouts.html#cb177-55"></a><span class="co"># plot 8</span></span>
+<span id="cb177-56"><a href="examples-of-complex-layouts.html#cb177-56"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb177-57"><a href="examples-of-complex-layouts.html#cb177-57"></a><span class="fu">colorBar</span>(<span class="fu">rbPal</span>(<span class="dv">100</span>), <span class="at">nticks =</span> <span class="dv">6</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb177-58"><a href="examples-of-complex-layouts.html#cb177-58"></a><span class="fu">rect</span>(<span class="at">xleft =</span> <span class="dv">0</span>, <span class="at">ybottom =</span> <span class="dv">0</span>, <span class="at">xright =</span> <span class="dv">1</span>, <span class="at">ytop =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb177-59"><a href="examples-of-complex-layouts.html#cb177-59"></a><span class="fu">mtext</span>(<span class="st">&quot;Sea surface temperature&quot;</span>, <span class="dv">3</span>, <span class="at">line =</span> <span class="fl">0.5</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb177-60"><a href="examples-of-complex-layouts.html#cb177-60"></a></span>
+<span id="cb177-61"><a href="examples-of-complex-layouts.html#cb177-61"></a><span class="co"># plot 9</span></span>
+<span id="cb177-62"><a href="examples-of-complex-layouts.html#cb177-62"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb177-63"><a href="examples-of-complex-layouts.html#cb177-63"></a><span class="fu">colorBar</span>(<span class="fu">rbPal</span>(<span class="dv">100</span>), <span class="at">nticks =</span> <span class="dv">6</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb177-64"><a href="examples-of-complex-layouts.html#cb177-64"></a><span class="fu">rect</span>(<span class="at">xleft =</span> <span class="dv">0</span>, <span class="at">ybottom =</span> <span class="dv">0</span>, <span class="at">xright =</span> <span class="dv">2</span>, <span class="at">ytop =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>)</span>
+<span id="cb177-65"><a href="examples-of-complex-layouts.html#cb177-65"></a><span class="fu">mtext</span>(<span class="fu">expression</span>(<span class="fu">bold</span>(<span class="fu">sum</span>(<span class="st">&quot;Oxygen, Temperature&quot;</span>))), <span class="dv">3</span>, <span class="at">line =</span> <span class="fl">0.5</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">0.8</span>)</span>
+<span id="cb177-66"><a href="examples-of-complex-layouts.html#cb177-66"></a></span>
+<span id="cb177-67"><a href="examples-of-complex-layouts.html#cb177-67"></a><span class="co"># plot 10 - panel A</span></span>
+<span id="cb177-68"><a href="examples-of-complex-layouts.html#cb177-68"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb177-69"><a href="examples-of-complex-layouts.html#cb177-69"></a><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb177-70"><a href="examples-of-complex-layouts.html#cb177-70"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="fl">0.5</span>, <span class="at">labels =</span> <span class="st">&quot;A&quot;</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">1.35</span>)</span>
+<span id="cb177-71"><a href="examples-of-complex-layouts.html#cb177-71"></a></span>
+<span id="cb177-72"><a href="examples-of-complex-layouts.html#cb177-72"></a><span class="co"># plot 11 - panel B</span></span>
+<span id="cb177-73"><a href="examples-of-complex-layouts.html#cb177-73"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb177-74"><a href="examples-of-complex-layouts.html#cb177-74"></a><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb177-75"><a href="examples-of-complex-layouts.html#cb177-75"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="fl">0.5</span>, <span class="at">labels =</span> <span class="st">&quot;B&quot;</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">1.35</span>)</span>
+<span id="cb177-76"><a href="examples-of-complex-layouts.html#cb177-76"></a></span>
+<span id="cb177-77"><a href="examples-of-complex-layouts.html#cb177-77"></a><span class="co"># plot 12 - panel C</span></span>
+<span id="cb177-78"><a href="examples-of-complex-layouts.html#cb177-78"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb177-79"><a href="examples-of-complex-layouts.html#cb177-79"></a><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb177-80"><a href="examples-of-complex-layouts.html#cb177-80"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="fl">0.5</span>, <span class="at">labels =</span> <span class="st">&quot;C&quot;</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">1.35</span>)</span>
+<span id="cb177-81"><a href="examples-of-complex-layouts.html#cb177-81"></a></span>
+<span id="cb177-82"><a href="examples-of-complex-layouts.html#cb177-82"></a><span class="co"># plot 13 - panel D</span></span>
+<span id="cb177-83"><a href="examples-of-complex-layouts.html#cb177-83"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb177-84"><a href="examples-of-complex-layouts.html#cb177-84"></a><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb177-85"><a href="examples-of-complex-layouts.html#cb177-85"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="fl">0.5</span>, <span class="at">labels =</span> <span class="st">&quot;D&quot;</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">cex =</span> <span class="fl">1.35</span>)</span></code></pre></div>
+<center>
+<img src="custommaps/img/example1.png" style="width:80.0%" />
+</center>
+<p><br/></p>
+<p>While it may seem complicated, all of these plot calls are make up each element
+of the graph. Before you say <em>I could do this with photoshop!</em>, keep in mind that
+with this code, I can now change or update the data at will and recreate the
+same figure effortlessly.</p>
+<p>Here is the actual figure that was built using this complex layout, representing
+hypoxia and demersal fisheries intensity in the St. Lawrence and a comparison of
+they joint density distribution.</p>
+<p><br/></p>
+<center>
+<img src="custommaps/img/layout1.png" style="width:90.0%" />
+</center>
+<p><br/></p>
+</div>
+<div id="second-example" class="section level3 hasAnchor" number="9.5.3">
+<h3><span class="header-section-number">9.5.3</span> Second example<a href="examples-of-complex-layouts.html#second-example" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can now move on to the second example showing that text can also be readily
+incorporated into a complex figure layout. Once again, this layout has been used
+to generate a figure used in a scientific paper and soon to be submitted for
+publication.</p>
+<p><br/></p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb178-1"><a href="examples-of-complex-layouts.html#cb178-1"></a>mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="dv">17</span>, <span class="dv">10</span>)</span>
+<span id="cb178-2"><a href="examples-of-complex-layouts.html#cb178-2"></a><span class="co"># Arrows</span></span>
+<span id="cb178-3"><a href="examples-of-complex-layouts.html#cb178-3"></a>mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb178-4"><a href="examples-of-complex-layouts.html#cb178-4"></a>mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">9</span><span class="sc">:</span><span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb178-5"><a href="examples-of-complex-layouts.html#cb178-5"></a>mat[<span class="dv">15</span><span class="sc">:</span><span class="dv">17</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb178-6"><a href="examples-of-complex-layouts.html#cb178-6"></a>mat[<span class="dv">15</span><span class="sc">:</span><span class="dv">17</span>, <span class="dv">9</span><span class="sc">:</span><span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb178-7"><a href="examples-of-complex-layouts.html#cb178-7"></a>mat[<span class="dv">9</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb178-8"><a href="examples-of-complex-layouts.html#cb178-8"></a>mat[<span class="dv">9</span>, <span class="dv">9</span><span class="sc">:</span><span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="dv">6</span></span>
+<span id="cb178-9"><a href="examples-of-complex-layouts.html#cb178-9"></a><span class="co"># Boxes</span></span>
+<span id="cb178-10"><a href="examples-of-complex-layouts.html#cb178-10"></a>mat[<span class="dv">4</span><span class="sc">:</span><span class="dv">8</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb178-11"><a href="examples-of-complex-layouts.html#cb178-11"></a>mat[<span class="dv">10</span><span class="sc">:</span><span class="dv">14</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="dv">8</span></span>
+<span id="cb178-12"><a href="examples-of-complex-layouts.html#cb178-12"></a>mat[<span class="dv">4</span><span class="sc">:</span><span class="dv">8</span>, <span class="dv">6</span><span class="sc">:</span><span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="dv">9</span></span>
+<span id="cb178-13"><a href="examples-of-complex-layouts.html#cb178-13"></a>mat[<span class="dv">10</span><span class="sc">:</span><span class="dv">14</span>, <span class="dv">6</span><span class="sc">:</span><span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb178-14"><a href="examples-of-complex-layouts.html#cb178-14"></a><span class="co"># Plots</span></span>
+<span id="cb178-15"><a href="examples-of-complex-layouts.html#cb178-15"></a>mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">8</span>] <span class="ot">&lt;-</span> <span class="dv">11</span></span>
+<span id="cb178-16"><a href="examples-of-complex-layouts.html#cb178-16"></a>mat[<span class="dv">15</span><span class="sc">:</span><span class="dv">17</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">8</span>] <span class="ot">&lt;-</span> <span class="dv">12</span></span>
+<span id="cb178-17"><a href="examples-of-complex-layouts.html#cb178-17"></a>mat[<span class="dv">6</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">13</span></span>
+<span id="cb178-18"><a href="examples-of-complex-layouts.html#cb178-18"></a>mat[<span class="dv">12</span><span class="sc">:</span><span class="dv">13</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="dv">14</span></span>
+<span id="cb178-19"><a href="examples-of-complex-layouts.html#cb178-19"></a>mat[<span class="dv">6</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">8</span><span class="sc">:</span><span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb178-20"><a href="examples-of-complex-layouts.html#cb178-20"></a>mat[<span class="dv">12</span><span class="sc">:</span><span class="dv">13</span>, <span class="dv">8</span><span class="sc">:</span><span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="dv">16</span></span>
+<span id="cb178-21"><a href="examples-of-complex-layouts.html#cb178-21"></a><span class="co"># Text</span></span>
+<span id="cb178-22"><a href="examples-of-complex-layouts.html#cb178-22"></a>mat[<span class="dv">5</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="dv">17</span></span>
+<span id="cb178-23"><a href="examples-of-complex-layouts.html#cb178-23"></a>mat[<span class="dv">11</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="dv">18</span></span>
+<span id="cb178-24"><a href="examples-of-complex-layouts.html#cb178-24"></a>mat[<span class="dv">5</span>, <span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="dv">19</span></span>
+<span id="cb178-25"><a href="examples-of-complex-layouts.html#cb178-25"></a>mat[<span class="dv">11</span>, <span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>] <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb178-26"><a href="examples-of-complex-layouts.html#cb178-26"></a>mat[<span class="dv">6</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="dv">21</span></span>
+<span id="cb178-27"><a href="examples-of-complex-layouts.html#cb178-27"></a>mat[<span class="dv">12</span><span class="sc">:</span><span class="dv">13</span>, <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> <span class="dv">22</span></span>
+<span id="cb178-28"><a href="examples-of-complex-layouts.html#cb178-28"></a>mat[<span class="dv">6</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">6</span><span class="sc">:</span><span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="dv">23</span></span>
+<span id="cb178-29"><a href="examples-of-complex-layouts.html#cb178-29"></a>mat[<span class="dv">12</span><span class="sc">:</span><span class="dv">13</span>, <span class="dv">6</span><span class="sc">:</span><span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="dv">24</span></span>
+<span id="cb178-30"><a href="examples-of-complex-layouts.html#cb178-30"></a><span class="fu">layout</span>(mat,</span>
+<span id="cb178-31"><a href="examples-of-complex-layouts.html#cb178-31"></a>  <span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">2</span>, .<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">2</span>, .<span class="dv">4</span>, .<span class="dv">2</span>, .<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb178-32"><a href="examples-of-complex-layouts.html#cb178-32"></a>  <span class="at">widths =</span> <span class="fu">c</span>(.<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">5</span>, .<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">2</span>)</span>
+<span id="cb178-33"><a href="examples-of-complex-layouts.html#cb178-33"></a>)</span>
+<span id="cb178-34"><a href="examples-of-complex-layouts.html#cb178-34"></a><span class="fu">layout.show</span>(<span class="dv">24</span>)</span></code></pre></div>
+<p><img src="rInSpace_files/figure-html/layout2-1.svg" width="672" /></p>
+<p><br/></p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode numberSource r numberLines"><code class="sourceCode r"><span id="cb179-1"><a href="examples-of-complex-layouts.html#cb179-1"></a><span class="fu">layout</span>(mat,</span>
+<span id="cb179-2"><a href="examples-of-complex-layouts.html#cb179-2"></a>  <span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">2</span>, .<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">2</span>, .<span class="dv">4</span>, .<span class="dv">2</span>, .<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb179-3"><a href="examples-of-complex-layouts.html#cb179-3"></a>  <span class="at">widths =</span> <span class="fu">c</span>(.<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">5</span>, .<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, .<span class="dv">2</span>)</span>
+<span id="cb179-4"><a href="examples-of-complex-layouts.html#cb179-4"></a>)</span>
+<span id="cb179-5"><a href="examples-of-complex-layouts.html#cb179-5"></a></span>
+<span id="cb179-6"><a href="examples-of-complex-layouts.html#cb179-6"></a><span class="co"># 1</span></span>
+<span id="cb179-7"><a href="examples-of-complex-layouts.html#cb179-7"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb179-8"><a href="examples-of-complex-layouts.html#cb179-8"></a><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-9"><a href="examples-of-complex-layouts.html#cb179-9"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(.<span class="dv">5</span>, <span class="dv">1</span>), <span class="at">y =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">5</span>))</span>
+<span id="cb179-10"><a href="examples-of-complex-layouts.html#cb179-10"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">5</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">5</span>))</span>
+<span id="cb179-11"><a href="examples-of-complex-layouts.html#cb179-11"></a><span class="fu">polygon</span>(<span class="at">x =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">47</span>, .<span class="dv">53</span>, .<span class="dv">5</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">03</span>, .<span class="dv">03</span>, <span class="dv">0</span>), <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb179-12"><a href="examples-of-complex-layouts.html#cb179-12"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> .<span class="dv">53</span>, <span class="at">labels =</span> <span class="st">&quot;Local management&quot;</span>, <span class="at">cex =</span> .<span class="dv">75</span>, <span class="at">font =</span> <span class="dv">1</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>))</span>
+<span id="cb179-13"><a href="examples-of-complex-layouts.html#cb179-13"></a></span>
+<span id="cb179-14"><a href="examples-of-complex-layouts.html#cb179-14"></a><span class="co"># 2</span></span>
+<span id="cb179-15"><a href="examples-of-complex-layouts.html#cb179-15"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb179-16"><a href="examples-of-complex-layouts.html#cb179-16"></a><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-17"><a href="examples-of-complex-layouts.html#cb179-17"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">5</span>), <span class="at">y =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">5</span>))</span>
+<span id="cb179-18"><a href="examples-of-complex-layouts.html#cb179-18"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">5</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">5</span>))</span>
+<span id="cb179-19"><a href="examples-of-complex-layouts.html#cb179-19"></a><span class="fu">polygon</span>(<span class="at">x =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">47</span>, .<span class="dv">53</span>, .<span class="dv">5</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">03</span>, .<span class="dv">03</span>, <span class="dv">0</span>), <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb179-20"><a href="examples-of-complex-layouts.html#cb179-20"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> .<span class="dv">53</span>, <span class="at">labels =</span> <span class="st">&quot;Regional management&quot;</span>, <span class="at">cex =</span> .<span class="dv">75</span>, <span class="at">font =</span> <span class="dv">1</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb179-21"><a href="examples-of-complex-layouts.html#cb179-21"></a></span>
+<span id="cb179-22"><a href="examples-of-complex-layouts.html#cb179-22"></a><span class="co"># 3</span></span>
+<span id="cb179-23"><a href="examples-of-complex-layouts.html#cb179-23"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb179-24"><a href="examples-of-complex-layouts.html#cb179-24"></a><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-25"><a href="examples-of-complex-layouts.html#cb179-25"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(.<span class="dv">5</span>, <span class="dv">1</span>), <span class="at">y =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">5</span>))</span>
+<span id="cb179-26"><a href="examples-of-complex-layouts.html#cb179-26"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">5</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1</span>, .<span class="dv">5</span>))</span>
+<span id="cb179-27"><a href="examples-of-complex-layouts.html#cb179-27"></a><span class="fu">polygon</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, .<span class="dv">93</span>, .<span class="dv">93</span>, <span class="dv">1</span>), <span class="at">y =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">51</span>, .<span class="dv">49</span>, .<span class="dv">5</span>), <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb179-28"><a href="examples-of-complex-layouts.html#cb179-28"></a></span>
+<span id="cb179-29"><a href="examples-of-complex-layouts.html#cb179-29"></a><span class="co"># 4</span></span>
+<span id="cb179-30"><a href="examples-of-complex-layouts.html#cb179-30"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb179-31"><a href="examples-of-complex-layouts.html#cb179-31"></a><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-32"><a href="examples-of-complex-layouts.html#cb179-32"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">5</span>), <span class="at">y =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">5</span>))</span>
+<span id="cb179-33"><a href="examples-of-complex-layouts.html#cb179-33"></a><span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">5</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1</span>, .<span class="dv">5</span>))</span>
+<span id="cb179-34"><a href="examples-of-complex-layouts.html#cb179-34"></a><span class="fu">polygon</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">07</span>, .<span class="dv">07</span>, <span class="dv">0</span>), <span class="at">y =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">51</span>, .<span class="dv">49</span>, .<span class="dv">5</span>), <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb179-35"><a href="examples-of-complex-layouts.html#cb179-35"></a></span>
+<span id="cb179-36"><a href="examples-of-complex-layouts.html#cb179-36"></a><span class="co"># 5, 6</span></span>
+<span id="cb179-37"><a href="examples-of-complex-layouts.html#cb179-37"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb179-38"><a href="examples-of-complex-layouts.html#cb179-38"></a>  <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb179-39"><a href="examples-of-complex-layouts.html#cb179-39"></a>  <span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-40"><a href="examples-of-complex-layouts.html#cb179-40"></a>  <span class="fu">lines</span>(<span class="at">x =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">5</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-41"><a href="examples-of-complex-layouts.html#cb179-41"></a>  <span class="fu">polygon</span>(<span class="at">x =</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">47</span>, .<span class="dv">53</span>, .<span class="dv">5</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">18</span>, .<span class="dv">18</span>, <span class="dv">0</span>), <span class="at">col =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb179-42"><a href="examples-of-complex-layouts.html#cb179-42"></a>}</span>
+<span id="cb179-43"><a href="examples-of-complex-layouts.html#cb179-43"></a></span>
+<span id="cb179-44"><a href="examples-of-complex-layouts.html#cb179-44"></a><span class="co"># 7, 8, 9, 10</span></span>
+<span id="cb179-45"><a href="examples-of-complex-layouts.html#cb179-45"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb179-46"><a href="examples-of-complex-layouts.html#cb179-46"></a>  <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb179-47"><a href="examples-of-complex-layouts.html#cb179-47"></a>  <span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-48"><a href="examples-of-complex-layouts.html#cb179-48"></a>  <span class="fu">rect</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="at">border =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb179-49"><a href="examples-of-complex-layouts.html#cb179-49"></a>}</span>
+<span id="cb179-50"><a href="examples-of-complex-layouts.html#cb179-50"></a></span>
+<span id="cb179-51"><a href="examples-of-complex-layouts.html#cb179-51"></a><span class="co"># 11</span></span>
+<span id="cb179-52"><a href="examples-of-complex-layouts.html#cb179-52"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb179-53"><a href="examples-of-complex-layouts.html#cb179-53"></a>  <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb179-54"><a href="examples-of-complex-layouts.html#cb179-54"></a>  <span class="fu">image</span>(envCov[[<span class="dv">1</span>]], <span class="at">col =</span> <span class="fu">rbPal</span>(<span class="dv">100</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb179-55"><a href="examples-of-complex-layouts.html#cb179-55"></a>  <span class="fu">rect</span>(xmn, ymn, xmx, ymx, <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">border =</span> <span class="st">&quot;#00000099&quot;</span>)</span>
+<span id="cb179-56"><a href="examples-of-complex-layouts.html#cb179-56"></a>}</span>
+<span id="cb179-57"><a href="examples-of-complex-layouts.html#cb179-57"></a></span>
+<span id="cb179-58"><a href="examples-of-complex-layouts.html#cb179-58"></a><span class="co"># 12</span></span>
+<span id="cb179-59"><a href="examples-of-complex-layouts.html#cb179-59"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb179-60"><a href="examples-of-complex-layouts.html#cb179-60"></a><span class="fu">image</span>(envCov[[<span class="dv">1</span>]] <span class="sc">+</span> envCov[[<span class="dv">2</span>]], <span class="at">col =</span> <span class="fu">rbPal</span>(<span class="dv">100</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb179-61"><a href="examples-of-complex-layouts.html#cb179-61"></a><span class="fu">rect</span>(xmn, ymn, xmx, ymx, <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">border =</span> <span class="st">&quot;#00000099&quot;</span>)</span>
+<span id="cb179-62"><a href="examples-of-complex-layouts.html#cb179-62"></a></span>
+<span id="cb179-63"><a href="examples-of-complex-layouts.html#cb179-63"></a><span class="co"># 13, 14</span></span>
+<span id="cb179-64"><a href="examples-of-complex-layouts.html#cb179-64"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb179-65"><a href="examples-of-complex-layouts.html#cb179-65"></a>  <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">1.25</span>, <span class="fl">1.25</span>, <span class="fl">1.25</span>, <span class="fl">1.25</span>))</span>
+<span id="cb179-66"><a href="examples-of-complex-layouts.html#cb179-66"></a>  <span class="fu">plot0</span>(<span class="at">x =</span> <span class="fu">c</span>(xmn, xmx), <span class="at">y =</span> <span class="fu">c</span>(ymn, ymx))</span>
+<span id="cb179-67"><a href="examples-of-complex-layouts.html#cb179-67"></a>  <span class="fu">image</span>(envCov[[<span class="dv">1</span>]], <span class="at">col =</span> <span class="fu">rbPal</span>(<span class="dv">100</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb179-68"><a href="examples-of-complex-layouts.html#cb179-68"></a>  <span class="fu">rect</span>(xmn, ymn, xmx, ymx, <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">border =</span> <span class="st">&quot;#00000099&quot;</span>)</span>
+<span id="cb179-69"><a href="examples-of-complex-layouts.html#cb179-69"></a>}</span>
+<span id="cb179-70"><a href="examples-of-complex-layouts.html#cb179-70"></a></span>
+<span id="cb179-71"><a href="examples-of-complex-layouts.html#cb179-71"></a><span class="co"># 15, 16</span></span>
+<span id="cb179-72"><a href="examples-of-complex-layouts.html#cb179-72"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb179-73"><a href="examples-of-complex-layouts.html#cb179-73"></a>  <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb179-74"><a href="examples-of-complex-layouts.html#cb179-74"></a>  <span class="fu">image</span>(envCov[[<span class="dv">2</span>]], <span class="at">col =</span> <span class="fu">rbPal</span>(<span class="dv">100</span>), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb179-75"><a href="examples-of-complex-layouts.html#cb179-75"></a>}</span>
+<span id="cb179-76"><a href="examples-of-complex-layouts.html#cb179-76"></a></span>
+<span id="cb179-77"><a href="examples-of-complex-layouts.html#cb179-77"></a><span class="co"># 17 Title 1</span></span>
+<span id="cb179-78"><a href="examples-of-complex-layouts.html#cb179-78"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb179-79"><a href="examples-of-complex-layouts.html#cb179-79"></a><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-80"><a href="examples-of-complex-layouts.html#cb179-80"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">labels =</span> <span class="st">&quot;Title1 - Year1&quot;</span>, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-81"><a href="examples-of-complex-layouts.html#cb179-81"></a></span>
+<span id="cb179-82"><a href="examples-of-complex-layouts.html#cb179-82"></a><span class="co"># 18 Title 2</span></span>
+<span id="cb179-83"><a href="examples-of-complex-layouts.html#cb179-83"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb179-84"><a href="examples-of-complex-layouts.html#cb179-84"></a><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-85"><a href="examples-of-complex-layouts.html#cb179-85"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">labels =</span> <span class="st">&quot;Title1 - Year2&quot;</span>, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-86"><a href="examples-of-complex-layouts.html#cb179-86"></a></span>
+<span id="cb179-87"><a href="examples-of-complex-layouts.html#cb179-87"></a><span class="co"># 19 Title 3</span></span>
+<span id="cb179-88"><a href="examples-of-complex-layouts.html#cb179-88"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb179-89"><a href="examples-of-complex-layouts.html#cb179-89"></a><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-90"><a href="examples-of-complex-layouts.html#cb179-90"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">labels =</span> <span class="st">&quot;Title2 - Year1&quot;</span>, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb179-91"><a href="examples-of-complex-layouts.html#cb179-91"></a></span>
+<span id="cb179-92"><a href="examples-of-complex-layouts.html#cb179-92"></a><span class="co"># 20 Title 4</span></span>
+<span id="cb179-93"><a href="examples-of-complex-layouts.html#cb179-93"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb179-94"><a href="examples-of-complex-layouts.html#cb179-94"></a><span class="fu">plot0</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-95"><a href="examples-of-complex-layouts.html#cb179-95"></a><span class="fu">text</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">y =</span> <span class="dv">1</span>, <span class="at">labels =</span> <span class="st">&quot;Title2 - Year2&quot;</span>, <span class="at">cex =</span> <span class="dv">1</span>, <span class="at">font =</span> <span class="dv">2</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb179-96"><a href="examples-of-complex-layouts.html#cb179-96"></a></span>
+<span id="cb179-97"><a href="examples-of-complex-layouts.html#cb179-97"></a><span class="co"># 21, 22, 23, 24</span></span>
+<span id="cb179-98"><a href="examples-of-complex-layouts.html#cb179-98"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb179-99"><a href="examples-of-complex-layouts.html#cb179-99"></a>  <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>))</span>
+<span id="cb179-100"><a href="examples-of-complex-layouts.html#cb179-100"></a>  <span class="fu">plot0</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-101"><a href="examples-of-complex-layouts.html#cb179-101"></a>  <span class="fu">text</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> .<span class="dv">95</span>, <span class="st">&quot;Jurisdiction:&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb179-102"><a href="examples-of-complex-layouts.html#cb179-102"></a>  <span class="fu">text</span>(<span class="at">x =</span> .<span class="dv">05</span>, <span class="at">y =</span> .<span class="dv">85</span>, <span class="st">&quot;\u2022 Municipal&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-103"><a href="examples-of-complex-layouts.html#cb179-103"></a>  <span class="fu">text</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> .<span class="dv">7</span>, <span class="st">&quot;Spatial distribution:&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb179-104"><a href="examples-of-complex-layouts.html#cb179-104"></a>  <span class="fu">text</span>(<span class="at">x =</span> .<span class="dv">05</span>, <span class="at">y =</span> .<span class="dv">6</span>, <span class="st">&quot;\u2022 Local&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-105"><a href="examples-of-complex-layouts.html#cb179-105"></a>  <span class="fu">text</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> .<span class="dv">45</span>, <span class="st">&quot;Data collection protocols:&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb179-106"><a href="examples-of-complex-layouts.html#cb179-106"></a>  <span class="fu">text</span>(<span class="at">x =</span> .<span class="dv">05</span>, <span class="at">y =</span> .<span class="dv">35</span>, <span class="st">&quot;\u2022 Non-standardized&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-107"><a href="examples-of-complex-layouts.html#cb179-107"></a>  <span class="fu">text</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> .<span class="dv">2</span>, <span class="st">&quot;Data availability:&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb179-108"><a href="examples-of-complex-layouts.html#cb179-108"></a>  <span class="fu">text</span>(<span class="at">x =</span> .<span class="dv">05</span>, <span class="at">y =</span> .<span class="dv">1</span>, <span class="st">&quot;\u2022 Fragmented&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-109"><a href="examples-of-complex-layouts.html#cb179-109"></a>}</span>
+<span id="cb179-110"><a href="examples-of-complex-layouts.html#cb179-110"></a></span>
+<span id="cb179-111"><a href="examples-of-complex-layouts.html#cb179-111"></a><span class="co"># 23, 24</span></span>
+<span id="cb179-112"><a href="examples-of-complex-layouts.html#cb179-112"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb179-113"><a href="examples-of-complex-layouts.html#cb179-113"></a>  <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>))</span>
+<span id="cb179-114"><a href="examples-of-complex-layouts.html#cb179-114"></a>  <span class="fu">plot0</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-115"><a href="examples-of-complex-layouts.html#cb179-115"></a>  <span class="fu">text</span>(<span class="at">x =</span> <span class="fl">0.05</span>, <span class="at">y =</span> .<span class="dv">95</span>, <span class="st">&quot;Jurisdiction:&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb179-116"><a href="examples-of-complex-layouts.html#cb179-116"></a>  <span class="fu">text</span>(<span class="at">x =</span> <span class="fl">0.1</span>, <span class="at">y =</span> .<span class="dv">85</span>, <span class="st">&quot;\u2022 Federal&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-117"><a href="examples-of-complex-layouts.html#cb179-117"></a>  <span class="fu">text</span>(<span class="at">x =</span> <span class="fl">0.05</span>, <span class="at">y =</span> .<span class="dv">70</span>, <span class="st">&quot;Spatial distribution:&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb179-118"><a href="examples-of-complex-layouts.html#cb179-118"></a>  <span class="fu">text</span>(<span class="at">x =</span> <span class="fl">0.1</span>, <span class="at">y =</span> .<span class="dv">60</span>, <span class="st">&quot;\u2022 Regional&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-119"><a href="examples-of-complex-layouts.html#cb179-119"></a>  <span class="fu">text</span>(<span class="at">x =</span> <span class="fl">0.05</span>, <span class="at">y =</span> .<span class="dv">45</span>, <span class="st">&quot;Data collection protocols:&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb179-120"><a href="examples-of-complex-layouts.html#cb179-120"></a>  <span class="fu">text</span>(<span class="at">x =</span> <span class="fl">0.1</span>, <span class="at">y =</span> .<span class="dv">35</span>, <span class="st">&quot;\u2022 Standardized&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-121"><a href="examples-of-complex-layouts.html#cb179-121"></a>  <span class="fu">text</span>(<span class="at">x =</span> <span class="fl">0.05</span>, <span class="at">y =</span> .<span class="dv">2</span>, <span class="st">&quot;Data availability:&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">font =</span> <span class="dv">2</span>)</span>
+<span id="cb179-122"><a href="examples-of-complex-layouts.html#cb179-122"></a>  <span class="fu">text</span>(<span class="at">x =</span> <span class="fl">0.1</span>, <span class="at">y =</span> .<span class="dv">1</span>, <span class="st">&quot;\u2022 Regional&quot;</span>, <span class="at">cex =</span> <span class="fl">0.75</span>, <span class="at">adj =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span>
+<span id="cb179-123"><a href="examples-of-complex-layouts.html#cb179-123"></a>}</span></code></pre></div>
+<center>
+<img src="custommaps/img/example2.png" style="width:90.0%" />
+</center>
+<p>And here is the actual figure!</p>
+<center>
+<img src="custommaps/img/layout2.png" style="width:90.0%" />
+</center>
+
+</div>
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="creating-a-simple-layout.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": [["Cours_SpatialR.pdf", "pdf"]],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"scroll_highlight": true,
+"edit": "https://github.com/sci1031/sci1031/edit/master/%s"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
