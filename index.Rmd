@@ -1,0 +1,55 @@
+---
+title: R in Space - A Series
+author: David Beauchesne, Mari-Hélène, Nicolas Casajus, Kevin Caelles, Elliot Dreujou, Steve Vissault
+date: 2023-02-08
+---
+
+# Introduction
+
+```{R setup, include = FALSE}
+knitr::opts_chunk$set(
+    comment = "#R> ",
+    attr.source='.numberLines'
+ )
+if (!dir.exists("data")) dir.create("data")
+```
+
+
+## So it begins
+
+A fair proportion of people involved in inSileco have one particular expertise
+in common: we work extensively with spatial data. This expertise has been
+developed through extensive time importing, creating and formatting spatial
+data, performing spatial analyses and building static and dynamic spatial
+visualizations.
+
+In this blog post series, we propose an educational tour of spatial possibilities
+offered by tools developed in the R environment. This series could thus be used
+in an educational setting to learn how to use R in Space!
+
+As is our usual habit, rather than creating a series of posts presenting specific
+tools, we will first ask a series of explicitly spatial and ecological questions
+and go through the possibilities offered by R to play around with spatial tools.
+Back in 2018, this was a series of blogpost, we turned in into a bookdown in 2021.
+
+
+## Beginner course
+
+1. Useful resources: curated list of valuable resources
+2. About spatial objects
+3. Importing spatial objects
+4. Basic mapping
+
+## Advanced course
+
+1. Attribute manipulation
+2. Geometry manipulation
+3. R spatial data resources
+4. Custom maps
+
+
+## SessionInfo
+
+```{r sessionInfo}
+sessionInfo()
+```
